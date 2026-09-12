@@ -26,12 +26,6 @@
   }
 
 
-   @media (max-width: 850px) {
-    .no-mobile {
-      display: none;
-    }
-  }
-
   html, body {
     margin: 0;
     padding: 0;
@@ -51,12 +45,126 @@
   h1, h2, h3, h4 {
     font-family: "Roboto Condensed", sans-serif;
   }
+</style>
 
 
-  /* =========================================================
-     HEADER
-     ========================================================= */
+<body>
 
+  <!-- =======================================================
+       HEADER
+       ======================================================= -->
+
+  <header class="header">
+   <div class="header-inner">
+
+    <!-- =====================================================
+         LOGOS
+         ===================================================== -->
+
+    <div class="institutions" aria-label="Institutions partenaires">
+
+      <div class="institution institution-1">
+        <img class="institution-logo" src="images/logo.png" alt="UN-Habitat">
+      </div>
+
+      <div class="institutions-secondary">
+
+        <div class="institution institution-2">
+          <img class="institution-logo" src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/satellite/_img/logo_univ_gustave_eiffel_3lignes_rvb.svg" alt="UN-Habitat">
+        </div>
+
+        <div class="institution institution-3">
+          <img class="institution-logo" src="images/eivp2.png" alt="Logo de l'institution 3">
+        </div>
+
+        <div class="institution institution-4">
+          <img class="institution-logo" src="images/UN-Habitat.png" alt="Logo de l'institution 4">
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CONTENU
+         ===================================================== -->
+
+    <div class="header-content">
+
+      <!-- Navigation supérieure -->
+      <nav class="top-nav">
+        <a href="#">PROGRAMMES</a>
+        <a href="#">MEDIA CENTRE</a>
+        <a href="#">GET INVOLVED</a>
+        <a href="#">EVENTS</a>
+      </nav>
+
+
+      <!-- ===================================================
+           NAVIGATION PRINCIPALE
+           =================================================== -->
+
+      <nav class="main-nav" aria-label="Navigation principale">
+
+        <!-- À PROPOS -->
+        <div class="nav-item">
+          <a href="#" class="nav-link">À PROPOS</a>
+          <div class="mega-menu" aria-label="Sous-menu À propos">
+            <div class="mega-column">
+              <a href="#">La Chaire</a>
+              <a href="#">Membres & partenaires</a>
+              <a href="#">Méthode</a>
+              <a href="#">Gouvernance</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJETS -->
+        <div class="nav-item">
+          <a href="#" class="nav-link">PROJETS</a>
+          <div class="mega-menu" aria-label="Sous-menu Projets">
+            <div class="mega-column">
+              <a href="#">Nos projets</a>
+              <a href="#">Projets en cours</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ÉVÈNEMENTS -->
+        <div class="nav-item">
+          <a href="#" class="nav-link">ÉVÈNEMENTS</a>
+          <div class="mega-menu" aria-label="Sous-menu Évènements">
+            <div class="mega-column">
+              <a href="#">Agenda</a>
+              <a href="#">Évènements à venir</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PUBLICATIONS -->
+        <div class="nav-item">
+          <a href="#" class="nav-link">PUBLICATIONS</a>
+          <div class="mega-menu" aria-label="Sous-menu Publications">
+            <div class="mega-column">
+              <a href="#">Rapports</a>
+              <a href="#">Études</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- AGENDA -->
+        <a href="#" class="donate no-mobile">AGENDA</a>
+
+      </nav>
+
+    </div>
+
+   </div>
+  </header>
+
+
+<style>
   .header {
     width: 100%;
     box-sizing: border-box;
@@ -388,204 +496,29 @@
 
     padding: 11px 21px;
 
-    background: #ffbe00;
-    color: #111 !important;
+    background: #2F2A85;
+    color: #fff !important;
 
     text-decoration: none;
   }
 
   .donate:hover {
-    background: #e8aa00;
+    /*background: #e8aa00;*/
   }
 
   .main-nav > .donate {
     height: auto;
   }
 
-
   /* =========================================================
-     HERO / CARROUSEL D'ACTUALITÉS
+     BOUTON "AGENDA" : masqué sur mobile
      ========================================================= */
 
-  .hero {
-    position: relative;
-    height: 500px;
-    overflow: hidden;
-    background: #282d30;
+  @media (max-width: 850px) {
+    .no-mobile {
+      display: none;
+    }
   }
-
-  .hero-slide {
-    position: absolute;
-    inset: 0;
-
-    display: flex;
-    align-items: flex-end;
-
-    background:
-      linear-gradient(
-        to top,
-        rgba(20, 22, 24, 0.85) 0%,
-        rgba(20, 22, 24, 0.35) 45%,
-        rgba(20, 22, 24, 0.15) 100%
-      ),
-      var(--slide-image) center / cover no-repeat;
-
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.7s ease;
-    z-index: 1;
-  }
-
-  .hero-slide.is-active {
-    opacity: 1;
-    visibility: visible;
-    z-index: 2;
-  }
-
-  .hero-slide-content {
-    width: 100%;
-    max-width: 1120px;
-    margin: 0 auto;
-
-    /* Même logique que .site-section__container : aucune marge
-       horizontale propre au-dessus de 900px, le texte démarre
-       donc à la même marge que le contenu des sections et le
-       logo du header. (Les flèches sont centrées verticalement
-       à mi-hauteur du hero, le contenu est calé en bas : pas de
-       chevauchement, donc pas besoin de dégagement horizontal.) */
-    padding-bottom: 56px;
-
-    color: #fff;
-  }
-
-  .hero-eyebrow {
-    display: inline-block;
-
-    margin-bottom: 14px;
-
-    padding: 5px 12px;
-
-    background: #00a9dc;
-    color: #fff;
-
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .hero-title {
-    margin-bottom: 14px;
-
-    font-size: clamp(20px, 3vw, 34px); /* fluide au lieu de sauts brusques */
-    font-weight: 700;
-    line-height: 1.2;
-  }
-
-  .hero-description {
-    margin-bottom: 22px;
-
-    max-width: 620px;
-
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 1.5;
-
-    color: rgba(255, 255, 255, 0.9);
-  }
-
-  .hero-link {
-    display: inline-block;
-
-    padding: 11px 22px;
-
-    background: #ffbe00;
-    color: #111;
-
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-
-    text-decoration: none;
-  }
-
-  .hero-link:hover {
-    background: #e8aa00;
-  }
-
-
-  /* --------- Flèches --------- */
-
-  .hero-arrow {
-    position: absolute;
-    top: 50%;
-    z-index: 5;
-
-    width: 44px;
-    height: 44px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    transform: translateY(-50%);
-
-    background: rgba(0, 0, 0, 0.35);
-    color: #fff;
-    border: none;
-
-    font-size: 20px;
-    line-height: 1;
-    cursor: pointer;
-
-    transition: background 0.2s ease;
-  }
-
-  .hero-arrow:hover {
-    background: #00a9dc;
-  }
-
-  .hero-arrow--prev {
-    left: 20px;
-  }
-
-  .hero-arrow--next {
-    right: 20px;
-  }
-
-
-  /* --------- Pastilles --------- */
-
-  .hero-dots {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 20px;
-    z-index: 5;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .hero-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-
-    padding: 0;
-    border: 2px solid rgba(255, 255, 255, 0.7);
-    background: transparent;
-
-    cursor: pointer;
-  }
-
-  .hero-dot.is-active {
-    background: #ffbe00;
-    border-color: #ffbe00;
-  }
-
 
   /* =========================================================
      RESPONSIVE : 1400px
@@ -653,32 +586,19 @@
     .mega-column {
       padding: 0 25px;
     }
-
-    .hero {
-      height: 440px;
-    }
-
-    .hero-title {
-      font-size: clamp(20px, 2.6vw, 28px);
-    }
   }
 
 
   /* =========================================================
      RESPONSIVE : 900px
      Même seuil et même valeur que .site-section (24px) : le
-     header et le carrousel restent alignés avec les sections.
+     header reste aligné avec les sections.
      ========================================================= */
 
   @media (max-width: 900px) {
 
     .header {
       padding: 0 24px;
-    }
-
-    .hero-slide-content {
-      padding-left: 24px;
-      padding-right: 24px;
     }
   }
 
@@ -866,25 +786,6 @@
       text-align: center;
     }
 
-    /* --- Hero --- */
-
-    .hero {
-      height: 420px;
-    }
-
-    .hero-slide-content {
-      padding-bottom: 44px;
-    }
-
-    .hero-title {
-      font-size: 26px;
-    }
-
-    .hero-description {
-      font-size: 14px;
-    }
-
-
 
     .mega-menu {
       background: inherit;
@@ -962,37 +863,6 @@
       padding: 9px 16px;
     }
 
-    /* --- Hero --- */
-
-    .hero {
-      height: 360px; /* CORRIGÉ : était écrasé à 200px par erreur de cascade */
-    }
-
-    .hero-slide-content {
-      padding-left: 18px;
-      padding-right: 18px;
-      padding-bottom: 32px;
-    }
-
-    .hero-title {
-      font-size: 20px;
-    }
-
-    .hero-description {
-      font-size: 13px;
-      line-height: 1.45;
-
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .hero-arrow {
-      width: 34px;
-      height: 34px;
-      font-size: 16px;
-    }
   }
 
 
@@ -1031,16 +901,6 @@
     .nav-link {
       font-size: 14px;
     }
-
-    .hero {
-      height: 340px;
-    }
-
-    .hero-slide-content {
-      padding-left: 15px;
-      padding-right: 15px;
-      padding-bottom: 28px;
-    }
   }
 
 
@@ -1049,7 +909,6 @@
      ========================================================= */
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-slide,
     .mega-menu,
     .nav-link::before {
       transition: none !important;
@@ -1057,138 +916,6 @@
   }
 
 </style>
-
-
-<body>
-
-  <!-- =======================================================
-       HEADER
-       ======================================================= -->
-
-  <header class="header">
-   <div class="header-inner">
-
-    <!-- =====================================================
-         LOGOS
-         ===================================================== -->
-
-    <div class="institutions" aria-label="Institutions partenaires">
-
-      <div class="institution institution-1">
-        <img class="institution-logo" src="images/logo.png" alt="UN-Habitat">
-      </div>
-
-      <div class="institutions-secondary">
-
-        <div class="institution institution-2">
-          <img class="institution-logo" src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/satellite/_img/logo_univ_gustave_eiffel_3lignes_rvb.svg" alt="UN-Habitat">
-        </div>
-
-        <div class="institution institution-3">
-          <img class="institution-logo" src="images/eivp2.png" alt="Logo de l'institution 3">
-        </div>
-
-        <div class="institution institution-4">
-          <img class="institution-logo" src="images/UN-Habitat.png" alt="Logo de l'institution 4">
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- =====================================================
-         CONTENU
-         ===================================================== -->
-
-    <div class="header-content">
-
-      <!-- Navigation supérieure -->
-      <nav class="top-nav">
-        <a href="#">PROGRAMMES</a>
-        <a href="#">MEDIA CENTRE</a>
-        <a href="#">GET INVOLVED</a>
-        <a href="#">EVENTS</a>
-      </nav>
-
-
-      <!-- ===================================================
-           NAVIGATION PRINCIPALE
-           =================================================== -->
-
-      <nav class="main-nav" aria-label="Navigation principale">
-
-        <!-- À PROPOS -->
-        <div class="nav-item">
-          <a href="#" class="nav-link">À PROPOS</a>
-          <div class="mega-menu" aria-label="Sous-menu À propos">
-            <div class="mega-column">
-              <a href="#">La Chaire</a>
-              <a href="#">Membres & partenaires</a>
-              <a href="#">Méthode</a>
-              <a href="#">Gouvernance</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- PROJETS -->
-        <div class="nav-item">
-          <a href="#" class="nav-link">PROJETS</a>
-          <div class="mega-menu" aria-label="Sous-menu Projets">
-            <div class="mega-column">
-              <a href="#">Nos projets</a>
-              <a href="#">Projets en cours</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- ÉVÈNEMENTS -->
-        <div class="nav-item">
-          <a href="#" class="nav-link">ÉVÈNEMENTS</a>
-          <div class="mega-menu" aria-label="Sous-menu Évènements">
-            <div class="mega-column">
-              <a href="#">Agenda</a>
-              <a href="#">Évènements à venir</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- PUBLICATIONS -->
-        <div class="nav-item">
-          <a href="#" class="nav-link">PUBLICATIONS</a>
-          <div class="mega-menu" aria-label="Sous-menu Publications">
-            <div class="mega-column">
-              <a href="#">Rapports</a>
-              <a href="#">Études</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- AGENDA -->
-        <a href="#" class="donate no-mobile">AGENDA</a>
-
-      </nav>
-
-    </div>
-
-   </div>
-  </header>
-
-
-  <!-- =======================================================
-       HERO / CARROUSEL D'ACTUALITÉS
-       ======================================================= -->
-
-  <section class="hero" aria-label="Dernières actualités">
-
-    <div style="display: none;">
-    <button class="hero-arrow hero-arrow--prev" type="button" aria-label="Actualité précédente">&#10094;</button>
-    <button class="hero-arrow hero-arrow--next" type="button" aria-label="Actualité suivante">&#10095;</button>
-    </div>
-
-    <div class="hero-dots" role="tablist" aria-label="Choisir une actualité"></div>
-
-  </section>
 
 
   <!-- =======================================================
@@ -1237,6 +964,327 @@
     });
   </script>
 
+
+  <!-- =======================================================
+       HERO / CARROUSEL D'ACTUALITÉS
+       ======================================================= -->
+
+  <section class="hero" aria-label="Dernières actualités">
+
+    <div style="display: none;">
+    <button class="hero-arrow hero-arrow--prev" type="button" aria-label="Actualité précédente">&#10094;</button>
+    <button class="hero-arrow hero-arrow--next" type="button" aria-label="Actualité suivante">&#10095;</button>
+    </div>
+
+    <div class="hero-dots" role="tablist" aria-label="Choisir une actualité"></div>
+
+  </section>
+
+
+<style>
+  .hero {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+    background: #282d30;
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: flex-end;
+
+    background:
+      linear-gradient(
+        to top,
+        rgba(20, 22, 24, 0.85) 0%,
+        rgba(20, 22, 24, 0.35) 45%,
+        rgba(20, 22, 24, 0.15) 100%
+      ),
+      var(--slide-image) center / cover no-repeat;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s ease;
+    z-index: 1;
+  }
+
+  .hero-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+  }
+
+  .hero-slide-content {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+
+    /* Même logique que .site-section__container : aucune marge
+       horizontale propre au-dessus de 900px, le texte démarre
+       donc à la même marge que le contenu des sections et le
+       logo du header. (Les flèches sont centrées verticalement
+       à mi-hauteur du hero, le contenu est calé en bas : pas de
+       chevauchement, donc pas besoin de dégagement horizontal.) */
+    padding-bottom: 64px; /* CORRIGÉ : un peu plus d'air avant les pastilles */
+
+    color: #fff;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+
+    margin-bottom: 14px;
+
+    padding: 5px 12px;
+
+    background: #00a9dc;
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .hero-title {
+    margin-bottom: 14px;
+
+    font-size: clamp(20px, 3vw, 34px); /* fluide au lieu de sauts brusques */
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .hero-description {
+    margin-bottom: 22px;
+
+    max-width: 620px;
+
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.5;
+
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .hero-link {
+    display: inline-block;
+
+    padding: 11px 22px;
+    margin-bottom: 24px;
+
+    background: #2F2A85;
+    color: #fff;
+
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+
+    text-decoration: none;
+  }
+
+  .hero-link:hover {
+    /*background: #e8aa00;*/
+  }
+
+
+  /* --------- Flèches --------- */
+
+  .hero-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: translateY(-50%);
+
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    border: none;
+
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+  }
+
+  .hero-arrow:hover {
+    background: #00a9dc;
+  }
+
+  .hero-arrow--prev {
+    left: 20px;
+  }
+
+  .hero-arrow--next {
+    right: 20px;
+  }
+
+
+  /* --------- Pastilles --------- */
+
+  .hero-dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .hero-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+
+    padding: 0;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    background: transparent;
+
+    cursor: pointer;
+  }
+
+  .hero-dot.is-active {
+    background: #2F2A85;
+    border-color: #2F2A85;
+  }
+
+  /* =========================================================
+     RESPONSIVE : 1100px
+     ========================================================= */
+
+  @media (max-width: 1100px) {
+
+    .hero {
+      height: 440px;
+    }
+
+    .hero-title {
+      font-size: clamp(20px, 2.6vw, 28px);
+    }
+  }
+
+
+  /* =========================================================
+     RESPONSIVE : 900px
+     Même seuil et même valeur que .site-section (24px) : le
+     texte du carrousel reste aligné avec les sections.
+     ========================================================= */
+
+  @media (max-width: 900px) {
+
+    .hero-slide-content {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+
+
+  /* =========================================================
+     RESPONSIVE : 850px
+     ========================================================= */
+
+  @media (max-width: 850px) {
+
+    .hero {
+      height: 420px;
+    }
+
+    .hero-slide-content {
+      padding-bottom: 52px;
+    }
+
+    .hero-title {
+      font-size: 26px;
+    }
+
+    .hero-description {
+      font-size: 14px;
+    }
+
+  }
+
+
+  /* =========================================================
+     RESPONSIVE : 600px
+     ========================================================= */
+
+  @media (max-width: 600px) {
+
+    .hero {
+      height: 360px; /* CORRIGÉ : était écrasé à 200px par erreur de cascade */
+    }
+
+    .hero-slide-content {
+      padding-left: 18px;
+      padding-right: 18px;
+      padding-bottom: 40px;
+    }
+
+    .hero-title {
+      font-size: 20px;
+    }
+
+    .hero-description {
+      font-size: 13px;
+      line-height: 1.45;
+
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .hero-arrow {
+      width: 34px;
+      height: 34px;
+      font-size: 16px;
+    }
+  }
+
+
+  /* =========================================================
+     RESPONSIVE : 400px
+     ========================================================= */
+
+  @media (max-width: 400px) {
+
+    .hero {
+      height: 340px;
+    }
+
+    .hero-slide-content {
+      padding-left: 15px;
+      padding-right: 15px;
+      padding-bottom: 36px;
+    }
+  }
+
+
+  /* =========================================================
+     ACCESSIBILITÉ : mouvement réduit
+     ========================================================= */
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slide {
+      transition: none !important;
+    }
+  }
+
+</style>
 
 
   <script>
@@ -1373,11 +1421,54 @@
       hero.addEventListener("mouseenter", () => clearInterval(timer));
       hero.addEventListener("mouseleave", startAutoplay);
 
+      /*
+       * ---------------------------------------------------
+       * Swipe tactile (mobile) : reproduit le comportement
+       * des flèches précédent/suivant.
+       * ---------------------------------------------------
+       */
+
+      const SWIPE_THRESHOLD = 40; // px minimum pour valider un swipe
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchEndX = 0;
+      let touchEndY = 0;
+
+      hero.addEventListener("touchstart", (e) => {
+        const touch = e.changedTouches[0];
+        touchStartX = touch.screenX;
+        touchStartY = touch.screenY;
+      }, { passive: true });
+
+      hero.addEventListener("touchend", (e) => {
+        const touch = e.changedTouches[0];
+        touchEndX = touch.screenX;
+        touchEndY = touch.screenY;
+        handleSwipe();
+      }, { passive: true });
+
+      function handleSwipe() {
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = touchEndY - touchStartY;
+
+        // Ignore le swipe si le geste est surtout vertical
+        // (l'utilisateur fait défiler la page, pas le carrousel).
+        if (Math.abs(deltaX) < Math.abs(deltaY)) return;
+        if (Math.abs(deltaX) < SWIPE_THRESHOLD) return;
+
+        if (deltaX < 0) {
+          nextSlide(); // swipe vers la gauche -> actualité suivante
+        } else {
+          prevSlide(); // swipe vers la droite -> actualité précédente
+        }
+      }
+
       showSlide(0);
       startAutoplay();
 
     })();
   </script>
+
 
 <style>
   /* =========================================================
@@ -1409,9 +1500,9 @@
 
   /* --- Thème sombre (utilisé par "Our focus") --- */
   .site-section--dark {
-    --section-bg: #203f72;
+    --section-bg: #2F2A85;
     --section-text: #fff;
-    --section-title-color: #00a9df;
+    --section-title-color: #fff;
     --section-line-color: #fff;
     --section-button-color: #fff;
     --section-button-border: #fff;
@@ -1751,7 +1842,7 @@
   }
 
   .news-card__link:focus-visible {
-    outline: 3px solid #ffbe00;
+    outline: 3px solid #2F2A85;
     outline-offset: -3px;
   }
 
@@ -1804,6 +1895,19 @@
 
     <div class="publications-grid">
 
+    <article class="publication-card">
+        <a href="#">
+          <div class="publication-image">
+            <img src="images/Renforcer la résilience climatique grâce à une approche fondée sur la solidarité, les droits culturels et l'innovation sociale  le cas des communautés des îles de Kerkennah.png" alt="SDG 11 Global Report">
+          </div>
+          <span class="publication-category">GLOBAL REPORT</span>
+          <h3>
+            SDG 11 Global Report 2026: Housing at the Centre of Sustainable Cities and Communities
+          </h3>
+        </a>
+      </article>
+
+
       <article class="publication-card">
         <a href="#">
           <div class="publication-image">
@@ -1840,10 +1944,10 @@
         </a>
       </article>
 
-      <article class="publication-card">
+      <article class="publication-card no-mobile">
         <a href="#">
           <div class="publication-image">
-            <img src="images/report-5.jpg" alt="UN-Habitat Catalogue">
+            <img src="images/gess.png" alt="UN-Habitat Catalogue">
           </div>
           <span class="publication-category">TECHNICAL REPORT</span>
           <h3>
