@@ -62,23 +62,23 @@
 
     <div class="institutions" aria-label="Institutions partenaires">
 
-      <div class="institution institution-1">
+      <a class="institution institution-1" href="#">
         <img class="institution-logo" src="images/logo.png" alt="UN-Habitat">
-      </div>
+      </a>
 
       <div class="institutions-secondary">
 
-        <div class="institution institution-2">
+        <a class="institution institution-2" href="https://www.univ-gustave-eiffel.fr/" target="_blank">
           <img class="institution-logo" src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/satellite/_img/logo_univ_gustave_eiffel_3lignes_rvb.svg" alt="UN-Habitat">
-        </div>
+        </a>
 
-        <div class="institution institution-3">
+        <a class="institution institution-3" href="https://www.eivp-paris.fr/" target="_blank">
           <img class="institution-logo" src="images/eivp2.png" alt="Logo de l'institution 3">
-        </div>
+        </a>
 
-        <div class="institution institution-4">
+        <a class="institution institution-4" href="https://unhabitat.org/" target="_blank">
           <img class="institution-logo" src="images/UN-Habitat.png" alt="Logo de l'institution 4">
-        </div>
+        </a>
 
       </div>
 
@@ -1068,7 +1068,7 @@
 
 
 
-  
+
 
   <!-- =======================================================
        HERO / CARROUSEL D'ACTUALITÉS
@@ -1403,18 +1403,19 @@ background:
        */
 
       const slides = [
-        {
-          image: "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/e/5/csm_chameau-el-agba_70afef97ce.png",
-          eyebrow: "Rapport",
-          title: "Atelier JDID",
-          description: "En arabe, JDID signifie « nouveau ». En français, c’est l’acronyme de « Jalons pour un Développement Immobilier Durable ». Débuté en 2022, il s’agit du 1er projet de la Chaire ISCI-MENA, à l’origine de sa fondation en novembre 2024.",
-          link: "#"
-        },
+        
         {
           image: "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/0/1/csm_Vue_aerienne_de_la_Grande_Mosquee_de_Kairouan__en_Tunisie_288b872169.jpg",
           eyebrow: "Évènement",
           title: "Conférence internationale sur les villes durables",
           description: "Retrouvez les temps forts de notre conférence qui a réuni chercheurs, institutions et acteurs de terrain autour des enjeux urbains.",
+          link: "#"
+        },
+        {
+          image: "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/e/5/csm_chameau-el-agba_70afef97ce.png",
+          eyebrow: "Rapport",
+          title: "Atelier JDID",
+          description: "En arabe, JDID signifie « nouveau ». En français, c’est l’acronyme de « Jalons pour un Développement Immobilier Durable ». Débuté en 2022, il s’agit du 1er projet de la Chaire ISCI-MENA, à l’origine de sa fondation en novembre 2024.",
           link: "#"
         },/*
         {
@@ -1787,82 +1788,95 @@ background:
 
 
 
+
 <section class="site-section news-section" aria-labelledby="news-section-title">
   <div class="site-section__container">
-
+ 
     <header class="site-section__header">
-      <h2 id="news-section-title" class="site-section__title">Dernière actualité</h2>
+      <h2 id="news-section-title" class="site-section__title">Dernières actualités</h2>
       <span class="site-section__line"></span>
     </header>
-
+ 
     <div class="news-grid">
       <article class="news-card news-card--large">
         <img class="news-card__image" src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/0/1/csm_Vue_aerienne_de_la_Grande_Mosquee_de_Kairouan__en_Tunisie_288b872169.jpg" alt="Réunion de travail autour de l'habitat">
         <div class="news-card__content">
           <div class="news-card__meta"><span>STORY</span><span>4 September 2026</span></div>
           <h3 class="news-card__title">Housing experts advance integrated approaches to adequate housing</h3>
+          <p class="news-card__description">A look at how researchers and practitioners are combining policy, design and community engagement to make housing more accessible and resilient.</p>
         </div>
         <a class="news-card__link" href="#" aria-label="Lire : Housing experts advance integrated approaches to adequate housing"></a>
       </article>
-
+ 
       <article class="news-card news-card--large">
         <img class="news-card__image" src="images/WUF2026.png" alt="Personne accueillie dans un logement">
         <div class="news-card__content">
           <div class="news-card__meta"><span>STORY</span><span>18 August 2026</span></div>
           <h3 class="news-card__title">World Urban Forum - Mai 2026</h3>
+          <p class="news-card__description">Retour sur les temps forts du Forum urbain mondial 2026 et les engagements pris en faveur d'un développement urbain plus durable.</p>
         </div>
         <a class="news-card__link" href="#" aria-label="Lire : From fragile shelter to a lasting home in Somalia"></a>
       </article>
-
+ 
       <article class="news-card news-card--small">
-        <img class="news-card__image" src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/7/9/csm_Farah-portrait_76112884ec.jpg">
+        <img class="news-card__image" src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/7/9/csm_Farah-portrait_76112884ec.jpg" alt="Portrait de Farah Sayem">
         <div class="news-card__content">
           <div class="news-card__meta"><span>NEWS</span><span>13 August 2026</span></div>
           <h3 class="news-card__title">Thèse sur la transformation des paysages urbains, étude comparée entre Marseille et Tunis - Farah SAYEM</h3>
+          <p class="news-card__description">Farah Sayem présente les principaux résultats de sa thèse, consacrée à l'évolution comparée des paysages urbains à Marseille et à Tunis.</p>
         </div>
         <a class="news-card__link" href="#" aria-label="Lire : South Africa and UN-Habitat to strengthen partnership with new country office"></a>
       </article>
-
+ 
       <article class="news-card news-card--small">
         <img class="news-card__image" src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/9/e/csm_Capture_d_ecran_2026-06-05_154247_6287c0072b.png" alt="Participants à une conférence">
         <div class="news-card__content">
           <div class="news-card__meta"><span>NEWS</span><span>29 July 2026</span></div>
           <h3 class="news-card__title">Nile News - Revue de presse</h3>
+          <p class="news-card__description">Un tour d'horizon des actualités et publications relayées cette semaine autour des enjeux urbains et territoriaux.</p>
         </div>
         <a class="news-card__link" href="#" aria-label="Lire : Build partnerships. Deliver impact."></a>
       </article>
-
+ 
       <article class="news-card news-card--small">
         <img class="news-card__image" src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/d/5/csm_1600df68-ae97-4337-ba79-0d71a9ff125c_b9fefc92ba.jpg" alt="Intervention lors d'une réunion internationale">
         <div class="news-card__content">
           <div class="news-card__meta"><span>NEWS</span><span>15 July 2026</span></div>
           <h3 class="news-card__title">DEIPM Master Hackathon</h3>
+          <p class="news-card__description">Les étudiants du Master DEIPM se sont réunis le temps d'un hackathon consacré à l'innovation dans les politiques et projets urbains.</p>
         </div>
         <a class="news-card__link" href="#" aria-label="Lire : A decade to deliver"></a>
       </article>
     </div>
-
+ 
     <div class="site-section__action">
       <a href="#" class="site-button">
         <span class="site-button__plus">+</span>
-        <span>VIEW ALL RESEARCH AND PUBLICATIONS</span>
+        <span>VOIR TOUTE L'ACTUALITÉ DE LA CHAIRE</span>
       </a>
     </div>
-
+ 
   </div>
 </section>
 
 <style>
+
   /* =========================================================
      SPÉCIFIQUE : NEWS & STORIES (grille de cartes)
      ========================================================= */
-
+ 
+  .site-section__container { max-width: 1120px; margin: 0 auto; }
+ 
+  .site-section__header { margin-bottom: 30px; }
+  .site-section__title { font-size: 28px; margin: 0 0 8px; }
+  .site-section__line { display: block; width: 60px; height: 3px; background: #2F2A85; }
+ 
   .news-grid {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: 46px 30px;
   }
-
+ 
   .news-card {
     position: relative;
     min-width: 0;
@@ -1872,17 +1886,17 @@ background:
     aspect-ratio: 1.88 / 1;
     isolation: isolate;
   }
-
+ 
   .news-card--large {
     grid-column: span 3;
     aspect-ratio: 1.83 / 1;
   }
-
+ 
   .news-card--small {
     grid-column: span 2;
     aspect-ratio: 1.93 / 1;
   }
-
+ 
   .news-card__image {
     position: absolute;
     inset: 0;
@@ -1892,20 +1906,21 @@ background:
     z-index: -2;
     transition: transform 0.35s ease;
   }
-
+ 
   .news-card::after {
     content: "";
     position: absolute;
     inset: 0;
     background: linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.82) 0%,
-      rgba(0, 0, 0, 0.18) 67%,
+      rgba(0, 0, 0, 0.85) 0%,
+      rgba(0, 0, 0, 0.45) 45%,
+      rgba(0, 0, 0, 0.1) 75%,
       rgba(0, 0, 0, 0.02) 100%
     );
     z-index: -1;
   }
-
+ 
   .news-card__content {
     position: absolute;
     left: 0;
@@ -1913,7 +1928,7 @@ background:
     bottom: 0;
     padding: 0 27px 20px;
   }
-
+ 
   .news-card__meta {
     margin-bottom: 8px;
     color: #fff;
@@ -1921,11 +1936,11 @@ background:
     font-weight: 700;
     line-height: 1.2;
   }
-
+ 
   .news-card__meta span + span {
     margin-left: 6px;
   }
-
+ 
   .news-card__title {
     margin: 0;
     color: #fff;
@@ -1933,58 +1948,82 @@ background:
     font-weight: 400;
     line-height: 1.28;
   }
-
+ 
+  .news-card__description {
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+ 
   .news-card:hover .news-card__image,
   .news-card:focus-within .news-card__image {
     transform: scale(1.035);
   }
-
+ 
   .news-card__link {
     position: absolute;
     inset: 0;
     z-index: 2;
     text-decoration: none;
   }
-
+ 
   .news-card__link:focus-visible {
     outline: 3px solid #2F2A85;
     outline-offset: -3px;
   }
-
+ 
+  .site-section__action { margin-top: 40px; text-align: center; }
+  .site-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    background: #2F2A85;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .site-button__plus { font-size: 16px; }
+ 
   @media (max-width: 900px) {
     .news-grid {
       gap: 24px;
     }
-
+ 
     .news-card--large,
     .news-card--small {
       grid-column: span 3;
     }
   }
-
+ 
   @media (max-width: 600px) {
     .news-grid {
       grid-template-columns: 1fr;
       gap: 18px;
     }
-
+ 
     .news-card--large,
     .news-card--small {
       grid-column: auto;
       aspect-ratio: 1.72 / 1;
     }
-
+ 
     .news-card__content {
       padding: 0 18px 16px;
     }
-
+ 
     .news-card__title {
       font-size: 16px;
     }
   }
 </style>
-
-
 
 
 <section class="site-section publications">
@@ -2363,6 +2402,9 @@ background:
 
 
 
+<!--
+
+
 <section class="site-section map">
   <div class="site-section__container">
 
@@ -2435,7 +2477,7 @@ background:
 </style>
 
 
-
+-->
 
 
 
@@ -2490,25 +2532,13 @@ background:
             <!-- About us -->
             <div class="footer-column">
 
-                <h3>About us</h3>
+                <h3>À propos</h3>
 
                 <ul>
-                    <li><a href="#">Overview</a></li>
-                    <li><a href="#">Accountability</a></li>
-                    <li><a href="#">Annual Report</a></li>
-                    <li><a href="#">Donors</a></li>
-                    <li><a href="#">Evaluation</a></li>
-                    <li><a href="#">Join us</a></li>
-                    <li><a href="#">Leadership</a></li>
-                    <li><a href="#">New Urban Agenda</a></li>
-                    <li><a href="#">Our Strategy</a></li>
-                    <li><a href="#">Partners</a></li>
-                    <li>
-                        <a href="#">
-                            Sustainable Development<br>
-                            Goals
-                        </a>
-                    </li>
+                    <li><a href="#">La Chaire</a></li>
+                    <li><a href="#">Membres & partenaires</a></li>
+                    <li><a href="#">Méthode</a></li>
+                    <li><a href="#">Gouvernance</a></li>
                 </ul>
 
             </div>
@@ -2517,24 +2547,16 @@ background:
             <!-- Knowledge -->
             <div class="footer-column">
 
-                <h3>Knowledge</h3>
+                <h3>Projets</h3>
 
                 <ul>
-                    <li><a href="#">Research and Publications</a></li>
-                    <li><a href="#">Best Practices</a></li>
-                    <li><a href="#">Capacity Building</a></li>
-                    <li><a href="#">Data and Analytics</a></li>
-                    <li><a href="#">Global Future Cities</a></li>
-                    <li><a href="#">Global Land Tool Network</a></li>
-                    <li><a href="#">Global Urban Lectures</a></li>
-                    <li><a href="#">Her City</a></li>
-                    <li><a href="#">Our City Plans</a></li>
-                    <li><a href="#">Urban Agenda Platform</a></li>
-                    <li><a href="#">Urban Data</a></li>
-                    <li><a href="#">UrbanLex</a></li>
-                    <li><a href="#">Urban Policy Platform</a></li>
-                    <li><a href="#">Urban Resilience Hub</a></li>
-                    <li><a href="#">World Cities Report</a></li>
+                    <li><a href="#">Thèse</a></li>
+                    <li><a href="#">Plateforme des ODD</a></li>
+                    <li><a href="#">Béni Khalled</a></li>
+                    <li><a href="#">Médina de Tunis</a></li>
+                    <li><a href="#">Îles Kerkennah</a></li>
+
+
                 </ul>
 
             </div>
@@ -2543,25 +2565,12 @@ background:
             <!-- Get involved -->
             <div class="footer-column">
 
-                <h3>Get involved</h3>
+                <h3>Évènements</h3>
 
                 <ul>
-                    <li><a href="#">Overview</a></li>
-                    <li><a href="#">Awards</a></li>
-                    <li><a href="#">Calls for Proposals</a></li>
-                    <li><a href="#">Events</a></li>
-                    <li>
-                        <a href="#">
-                            International Day of Zero<br>
-                            Waste
-                        </a>
-                    </li>
-                    <li><a href="#">National Urban Forums</a></li>
-                    <li><a href="#">Urban October</a></li>
-                    <li><a href="#">Waste Wise Cities</a></li>
-                    <li><a href="#">World Cities Day</a></li>
-                    <li><a href="#">World Urban Campaign</a></li>
-                    <li><a href="#">World Urban Forum</a></li>
+                    <li><a href="#">Enquêtes de terrain</a></li>
+                    <li><a href="#">Ateliers et stages</a></li>
+                    <li><a href="#">Séminaires et conférences</a></li>
                 </ul>
 
             </div>
@@ -2570,70 +2579,11 @@ background:
             <!-- Governance -->
             <div class="footer-column governance">
 
-                <h3>Governance</h3>
+                <h3>Publications</h3>
 
                 <ul>
-                    <li><a href="#">UN-Habitat Assembly</a></li>
-                    <li><a href="#">Executive Board</a></li>
-
-                    <li>
-                        <a href="#">
-                            Committee of Permanent<br>
-                            Representatives
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            Open-ended<br>
-                            Intergovernmental Expert<br>
-                            Working Group on Adequate<br>
-                            Housing for All
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            High-level Meeting of the UN<br>
-                            General Assembly on the New<br>
-                            Urban Agenda
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            Roadmap towards the<br>
-                            meetings of the UN-Habitat<br>
-                            Governing Bodies
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            Monthly update including<br>
-                            funding status
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            General communications from<br>
-                            Member States
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            Previous sessions of the<br>
-                            Governing Council
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#">
-                            General Assembly Reports
-                        </a>
-                    </li>
+                    <li><a href="#">Ouvrages et articles scientifiques</a></li>
+                    <li><a href="#">Revue de presse</a></li>
                 </ul>
 
             </div>
@@ -2642,18 +2592,16 @@ background:
             <!-- Media -->
             <div class="footer-column media-column">
 
+<!--
                 <h3>Media centre</h3>
 
                 <ul>
                     <li><a href="#">Media centre</a></li>
                     <li><a href="#">News and Stories</a></li>
-                </ul>
+                </ul>-->
 
 
-                <!-- Connect -->
-                <div class="footer-connect">
-
-                    <h3>Connect</h3>
+                <h3>Connect</h3>
 
                     <div class="social-links">
 
@@ -2664,27 +2612,6 @@ background:
                             >
                         </a>
 
-                        <a href="#" aria-label="Twitter">
-                            <img
-                                src="images/social/twitter.png"
-                                alt="Twitter"
-                            >
-                        </a>
-
-                        <a href="#" aria-label="Facebook">
-                            <img
-                                src="images/social/facebook.png"
-                                alt="Facebook"
-                            >
-                        </a>
-
-                        <a href="#" aria-label="YouTube">
-                            <img
-                                src="images/social/youtube.png"
-                                alt="YouTube"
-                            >
-                        </a>
-
                         <a href="#" aria-label="Instagram">
                             <img
                                 src="images/social/instagram.png"
@@ -2692,15 +2619,32 @@ background:
                             >
                         </a>
 
-                        <a href="#" aria-label="Flickr">
+
+                        <a href="#" aria-label="Facebook">
                             <img
-                                src="images/social/flickr.png"
-                                alt="Flickr"
+                                src="images/social/facebook.png"
+                                alt="Facebook"
                             >
                         </a>
+                        <!--
+                        <a href="#" aria-label="YouTube">
+                            <img
+                                src="images/social/youtube.png"
+                                alt="YouTube"
+                            >
+                        </a>-->
+
+                        
+
 
                     </div>
 
+
+
+                <!-- Connect -->
+                <div class="footer-connect">
+
+                    
                 </div>
 
             </div>
