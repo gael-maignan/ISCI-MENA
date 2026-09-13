@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Header institutionnel</title>
+  <title>ISCI-MENA</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,7 +49,6 @@
 
 
 <body>
-
   <!-- =======================================================
        HEADER
        ======================================================= -->
@@ -125,8 +124,11 @@
           <a href="#" class="nav-link">PROJETS</a>
           <div class="mega-menu" aria-label="Sous-menu Projets">
             <div class="mega-column">
-              <a href="#">Nos projets</a>
-              <a href="#">Projets en cours</a>
+              <a href="#">Thèse</a>
+              <a href="#">Plateforme des ODD</a>
+              <a href="#">Béni Khalled</a>
+              <a href="#">Médina de Tunis</a>
+              <a href="#">Îles Kerkennah</a>
             </div>
           </div>
         </div>
@@ -147,8 +149,8 @@
           <a href="#" class="nav-link">PUBLICATIONS</a>
           <div class="mega-menu" aria-label="Sous-menu Publications">
             <div class="mega-column">
-              <a href="#">Rapports</a>
-              <a href="#">Études</a>
+              <a href="#">Ouvrages et articles scientifiques</a>
+              <a href="#">Revue de presse</a>
             </div>
           </div>
         </div>
@@ -327,6 +329,7 @@
     justify-content: flex-end;
 
     gap: 0;
+    column-gap: 0;
 
     /*
      * Le menu déroulant est positionné par rapport au HEADER
@@ -342,6 +345,7 @@
     align-items: center;
 
     height: 100%;
+    margin: 0; /* hitbox jointive avec les nav-item voisins : pas de zone morte au survol */
   }
 
   .nav-link {
@@ -440,6 +444,27 @@
     pointer-events: auto;
   }
 
+  /*
+   * PRIORITÉ D'EMPILEMENT : tous les mega-menu partagent le même
+   * z-index (1000), donc en cas de deux menus ouverts en même temps
+   * (ex : un lien cliqué garde le mega-menu affiché via :focus-within,
+   * puis on survole un AUTRE lien plus à gauche dans le DOM), c'est
+   * l'ordre du DOM qui tranchait et le sous-menu du lien cliqué
+   * passait devant celui réellement survolé. On force ici le menu
+   * sous la souris à toujours passer au premier plan.
+   */
+  .nav-item.is-open .mega-menu {
+    z-index: 1000;
+  }
+
+  .nav-item:focus-within .mega-menu {
+    z-index: 1001;
+  }
+
+  .nav-item:hover .mega-menu {
+    z-index: 1002;
+  }
+
 
   /* =========================================================
      COLONNES DU MÉGA MENU
@@ -482,7 +507,7 @@
 
   .mega-menu a:hover,
   .mega-menu a:focus {
-    color: #111;
+    color: #201D5B;
   }
 
 
@@ -721,8 +746,6 @@
       transition: transform 0.25s ease;
     }
 
-    .nav-item:hover .nav-link::before,
-    .nav-item:focus-within .nav-link::before,
     .nav-item.is-open .nav-link::before {
       transform: translateY(-30%) rotate(225deg);
     }
@@ -731,6 +754,15 @@
      * CORRIGÉ : le sous-menu ne flotte plus en "position: fixed"
      * (top/bottom: auto n'a pas de sens). Il s'ouvre désormais
      * en accordéon, dans le flux normal, juste sous son lien.
+     *
+     * CORRIGÉ (mobile) : l'ouverture/fermeture dépend UNIQUEMENT
+     * de la classe .is-open (pilotée par le JS au clic). Sur tactile,
+     * :hover peut rester "collé" après un tap et :focus-within reste
+     * actif tant que le lien garde le focus : ces deux déclencheurs
+     * empêchaient le sous-menu de se refermer au second tap. La
+     * hauteur réelle (scrollHeight) est calculée en JS pour une
+     * animation fluide et proportionnée au contenu, au lieu d'une
+     * valeur arbitraire (600px) qui rendait la transition saccadée.
      */
     .mega-menu {
       position: static;
@@ -750,16 +782,14 @@
       opacity: 1;
       pointer-events: none;
 
-      transition: max-height 0.5s ease;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .nav-item:hover .mega-menu,
-    .nav-item:focus-within .mega-menu,
     .nav-item.is-open .mega-menu {
       visibility: visible;
       pointer-events: auto;
-      max-height: 600px;
       padding: 8px 4px 16px;
+      /* max-height est fixé dynamiquement en JS (scrollHeight) */
     }
 
     .mega-column,
@@ -926,44 +956,119 @@
        ======================================================= -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const isMobile = () => window.matchMedia('(max-width: 850px)').matches;
+      const mobileQuery = window.matchMedia('(max-width: 850px)');
+      const isMobile = () => mobileQuery.matches;
 
-      document.querySelectorAll('.nav-item').forEach((item) => {
-        const link = item.querySelector('.nav-link');
-        const menu = item.querySelector('.mega-menu');
-        if (!link || !menu) return;
+      // Délai avant fermeture desktop : si la souris ressort d'un
+      // nav-item une fraction de seconde (micro zone morte entre deux
+      // hitbox, changement de fenêtre de survol, etc.) avant d'entrer
+      // dans le suivant, le mega-menu reste affiché sans clignoter.
+      const CLOSE_DELAY = 120;
+      let closeTimer = null;
 
-        link.setAttribute('aria-expanded', 'false');
+      const items = Array.from(document.querySelectorAll('.nav-item'));
+      const entries = items.map((item) => ({
+        item,
+        link: item.querySelector('.nav-link'),
+        menu: item.querySelector('.mega-menu'),
+      })).filter((e) => e.link && e.menu);
+
+      entries.forEach(({ link }) => link.setAttribute('aria-expanded', 'false'));
+
+      function setExpanded(entry, expanded) {
+        entry.item.classList.toggle('is-open', expanded);
+        entry.link.setAttribute('aria-expanded', String(expanded));
+      }
+
+      // ---- MOBILE : hauteur réelle animée (fluide, sans à-coups) ----
+      function openMobile(entry) {
+        entries.forEach((other) => {
+          if (other !== entry && other.item.classList.contains('is-open')) {
+            closeMobile(other);
+          }
+        });
+        setExpanded(entry, true);
+        entry.menu.style.maxHeight = entry.menu.scrollHeight + 'px';
+      }
+
+      function closeMobile(entry) {
+        // Fixe la hauteur courante avant de repasser à 0 pour garantir
+        // une transition animée (et pas un saut instantané depuis "auto").
+        entry.menu.style.maxHeight = entry.menu.scrollHeight + 'px';
+        requestAnimationFrame(() => {
+          entry.menu.style.maxHeight = '0px';
+        });
+        setExpanded(entry, false);
+      }
+
+      // ---- DESKTOP : hover-intent, le menu reste ouvert en traversant les liens ----
+      function openDesktop(entry) {
+        clearTimeout(closeTimer);
+        entries.forEach((other) => {
+          if (other !== entry) setExpanded(other, false);
+        });
+        setExpanded(entry, true);
+      }
+
+      function scheduleCloseDesktop() {
+        clearTimeout(closeTimer);
+        closeTimer = setTimeout(() => {
+          entries.forEach((entry) => setExpanded(entry, false));
+        }, CLOSE_DELAY);
+      }
+
+      entries.forEach((entry) => {
+        const { item, link, menu } = entry;
+
+        item.addEventListener('mouseenter', () => {
+          if (isMobile()) return;
+          openDesktop(entry);
+        });
+
+        item.addEventListener('mouseleave', () => {
+          if (isMobile()) return;
+          scheduleCloseDesktop();
+        });
 
         link.addEventListener('click', (e) => {
-          if (!isMobile()) return; // desktop : comportement au survol inchangé
+          if (!isMobile()) return; // desktop : comportement au survol géré ci-dessus
           e.preventDefault();
 
-          const isOpen = item.classList.contains('is-open');
+          const willOpen = !item.classList.contains('is-open');
+          if (willOpen) {
+            openMobile(entry);
+          } else {
+            closeMobile(entry);
+          }
 
-          document.querySelectorAll('.nav-item.is-open').forEach((openItem) => {
-            if (openItem !== item) {
-              openItem.classList.remove('is-open');
-              openItem.querySelector('.nav-link').setAttribute('aria-expanded', 'false');
-            }
-          });
-
-          item.classList.toggle('is-open', !isOpen);
-          link.setAttribute('aria-expanded', String(!isOpen));
+          // Évite que :focus-within ne maintienne visuellement le menu
+          // ouvert après le tap, une fois la classe is-open retirée.
+          link.blur();
         });
       });
 
-      window.addEventListener('resize', () => {
-        if (!isMobile()) {
-          document.querySelectorAll('.nav-item.is-open').forEach((item) => {
-            item.classList.remove('is-open');
-            item.querySelector('.nav-link').setAttribute('aria-expanded', 'false');
-          });
-        }
+      mobileQuery.addEventListener('change', (e) => {
+        clearTimeout(closeTimer);
+        entries.forEach((entry) => {
+          setExpanded(entry, false);
+          if (e.matches) {
+            entry.menu.style.maxHeight = '0px';
+          } else {
+            entry.menu.style.maxHeight = '';
+          }
+        });
       });
     });
   </script>
 
+
+
+
+
+
+
+
+  
 
   <!-- =======================================================
        HERO / CARROUSEL D'ACTUALITÉS
@@ -1040,7 +1145,7 @@ background:
 
     padding: 5px 12px;
 
-    background: #00a9dc;
+    background: #2F2A85;
     color: #fff;
 
     font-size: 12px;
@@ -1075,7 +1180,7 @@ background:
     padding: 11px 22px;
     margin-bottom: 24px;
 
-    background: #2F2A85;
+    background: #06ADD5;
     color: #fff;
 
     font-size: 14px;
