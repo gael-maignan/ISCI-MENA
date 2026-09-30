@@ -1,0 +1,77 @@
+{
+  "categories": [
+    {
+      "id": "organisations-fondatrices",
+      "titre": "Organisations fondatrices de la Chaire ISCI-MENA"
+    },
+    {
+      "id": "composantes-universite-gustave-eiffel",
+      "titre": "Composantes de l'Université Gustave Eiffel"
+    },
+    {
+      "id": "universites-ecoles-partenaires",
+      "titre": "Universités et écoles partenaires"
+    },
+    {
+      "id": "institutions-partenaires",
+      "titre": "Institutions partenaires"
+    }
+  ],
+  "organisations-fondatrices": [
+    {
+      "id": "eivp",
+      "nom": "EIVP",
+      "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/d/2/csm_EIVP-LOGO-V2_aa69deca62.png",
+      "lien": "https://www.eivp-paris.fr/",
+      "nouvelOnglet": true
+    },
+    {
+      "id": "uge",
+      "nom": "Université Gustave Eiffel",
+      "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/f/9/csm_UGE2_1f4df704f0.png",
+      "lien": "https://www.univ-gustave-eiffel.fr/",
+      "nouvelOnglet": true
+    },
+    {
+      "id": "un-habitat",
+      "nom": "UN-Habitat",
+      "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/9/5/csm_ONU-H-Logo-V2_2db382696f.png",
+      "lien": "https://unhabitat.org/fr/node/2969",
+      "nouvelOnglet": true
+    }
+  ],
+  "composantes-universite-gustave-eiffel": [
+    {
+      "id": "lab-urba",
+      "nom": "Lab'URBA",
+      "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/d/8/csm_LabUrba-LOGO-V2_dc5b863c24.png",
+      "lien": "https://laburba.univ-gustave-eiffel.fr/",
+      "nouvelOnglet": true
+    }
+  ],
+  "universites-ecoles-partenaires": [
+    {
+      "id": "enit",
+      "nom": "ENIT",
+      "image": "",
+      "lien": "",
+      "nouvelOnglet": true
+    },
+    {
+      "id": "enau",
+      "nom": "ENAU",
+      "image": "",
+      "lien": "",
+      "nouvelOnglet": true
+    }
+  ],
+  "institutions-partenaires": [
+    {
+      "id": "snit",
+      "nom": "SNIT",
+      "image": "",
+      "lien": "",
+      "nouvelOnglet": true
+    }
+  ]
+}

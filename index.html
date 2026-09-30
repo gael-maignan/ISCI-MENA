@@ -2796,6 +2796,327 @@ background:
 
 
 
+<!-- =======================================================
+     PROJET — fiche d'un projet, remplie depuis data/contenus/
+     (projets, publications, personnes, partenaires).
+     Changer l'id dans data-projet pour afficher un autre projet.
+     ======================================================= -->
+
+<section class="site-section projet-section" aria-label="Projet">
+  <div class="site-section__container">
+    <div class="projet" data-projet="iles-kerkennah" aria-busy="true"></div>
+  </div>
+</section>
+
+<section class="site-section projet-section" aria-label="Projet">
+  <div class="site-section__container">
+    <div class="projet" data-projet="plateforme-des-odd" aria-busy="true"></div>
+  </div>
+</section>
+
+<section class="site-section projet-section" aria-label="Projet">
+  <div class="site-section__container">
+    <div class="projet" data-projet="beni-khalled" aria-busy="true"></div>
+  </div>
+</section>
+
+<style>
+  /* =========================================================
+     FICHE PROJET
+     ========================================================= */
+
+  .projet__grille {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  /* --- Contenu principal --- */
+  .projet__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .projet__titre {
+    margin: 0 0 24px;
+    color: #111;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .projet__titre::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    margin-top: 14px;
+    background: #2F2A85;
+  }
+
+  .projet__image {
+    margin: 0 0 28px;
+    aspect-ratio: 16 / 8;
+    overflow: hidden;
+    background: #e3e5ee;
+  }
+
+  .projet__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .projet__texte {
+    color: #222;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  .projet__texte p {
+    margin: 0 0 18px;
+  }
+
+  .projet__texte p:last-child {
+    margin-bottom: 0;
+  }
+
+  .projet__bloc {
+    margin-top: 56px;
+  }
+
+  /* --- Équipe --- */
+  .projet__equipe {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 28px 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .projet__personne {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .projet__photo {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 12px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #e3e5ee;
+    box-shadow: 0 0 0 4px #fff, 0 0 0 5px #dfe1ec;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .projet__photo--initiales {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2F2A85;
+    color: #fff;
+    font: 700 32px/1 "Roboto Condensed", sans-serif;
+  }
+
+  a.projet__personne:hover .projet__photo {
+    box-shadow: 0 0 0 4px #fff, 0 0 0 6px #06ADD5;
+  }
+
+  .projet__nom {
+    color: #111;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.3;
+  }
+
+  .projet__fonction {
+    margin-top: 4px;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  /* --- Partenaires --- */
+  .projet__partenaires {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .projet__partenaire {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 16px;
+    border: 1px solid #e3e5ee;
+    background: #fff;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  a.projet__partenaire:hover {
+    border-color: #2F2A85;
+    box-shadow: 0 6px 18px rgba(47, 42, 133, 0.05);
+  }
+
+  .projet__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    margin-bottom: 12px;
+  }
+
+  .projet__logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .projet__logo-texte {
+    color: #2F2A85;
+    font: 700 22px/1.1 "Roboto Condensed", sans-serif;
+    text-align: center;
+  }
+
+  .projet__partenaire-nom {
+    color: #111;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .projet__partenaire-cat {
+    margin-top: 4px;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  /* --- Volet : tous les projets par pays --- */
+  .projet__volet {
+    position: sticky;
+    top: 24px;
+    padding: 24px;
+    background: #f5f6fa;
+    border-top: 3px solid #2F2A85;
+  }
+
+  .projet__volet-titre {
+    margin: 0 0 18px;
+    color: #2F2A85;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .projet__volet-groupe + .projet__volet-groupe {
+    margin-top: 20px;
+  }
+
+  .projet__volet-pays {
+    margin: 0 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #dfe1ec;
+    color: #06ADD5;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .projet__volet ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .projet__volet-lien {
+    display: block;
+    padding: 7px 0 7px 12px;
+    border-left: 3px solid transparent;
+    color: #222;
+    font-size: 15px;
+    line-height: 1.3;
+    text-decoration: none;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  a.projet__volet-lien:hover,
+  a.projet__volet-lien:focus-visible {
+    color: #2F2A85;
+    border-left-color: #06ADD5;
+  }
+
+  .projet__volet-lien.is-actif {
+    color: #2F2A85;
+    font-weight: 700;
+    border-left-color: #2F2A85;
+  }
+
+  /* --- Responsive --- */
+  @media (max-width: 900px) {
+    .projet__grille {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .projet__volet {
+      position: static;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .projet__titre {
+      font-size: 28px;
+    }
+
+    .projet__texte {
+      font-size: 16px;
+    }
+
+    .projet__bloc {
+      margin-top: 40px;
+    }
+
+    .projet__equipe {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .projet__photo {
+      width: 96px;
+      height: 96px;
+    }
+
+    .projet__partenaires {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .projet__logo {
+      height: 60px;
+    }
+  }
+</style>
+
+
+
+
 <section class="site-section text-media-section" aria-label="Portraits">
   <div class="site-section__container">
 
@@ -2929,7 +3250,6 @@ background:
   margin-bottom: 14px;
   overflow: hidden;
   background: #e3e5ee;
-  box-shadow: 0 6px 18px rgba(47, 42, 133, 0.12);
 }
 
 .pt-article__image img {

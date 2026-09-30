@@ -10,6 +10,11 @@
       "La Médina de Tunis est patrimoine mondial de l’UNESCO depuis 1979. Connue pour son architecture historique et son artisanat ancestral, depuis 2011, elle rayonne également par une nouvelle activité culturelle bourgeonnante. Cette effusion impulsée par des acteurs non institutionnels, des associations à but non lucratif et des habitants contribue à régénérer la médina.",
       "Afin de comprendre ce mécanisme, les chercheurs Eric GAUTIER LAURENT (Université Gustave Eiffel) et Meriem MAAZOUL (ESSEC Tunis) ont conduit une ethnographie au sein de la médina, appuyés par Mariem REKIK (ONU-Habitat Tunis)."
     ],
+    "partenaires": [
+      "un-habitat",
+      "eivp",
+      "lab-urba"
+    ],
     "lien": "url de la page du projet..."
   },
   {
@@ -44,7 +49,13 @@
     "titre": "Îles Kerkennah",
     "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/contributeurs/ISCI-MENA/IMG_1479.JPG",
     "description": [
-      "Situé dans le golfe de Gabès, en Tunisie, l’archipel des Kerkennah est confronté à la montée des eaux. Plusieurs facteurs humains aggravant la situation. La reconnexion aux pratiques de soin mutuel et aux savoirs endogènes pourrait constituer un levier essentiel pour repenser les stratégies d’adaptation de l'île."
+      "Situé dans le golfe de Gabès, en Tunisie, l’archipel des Kerkennah est confronté à la montée des eaux. Plusieurs facteurs humains aggravant la situation. La reconnexion aux pratiques de soin mutuel et aux savoirs endogènes pourrait constituer un levier essentiel pour repenser les stratégies d’adaptation de l'île.",
+      "C’est sur cette solution que se sont penchées trois chercheuses en gestion, marketing et sciences sociales des universités Gustave Eiffel, Bretagne Sud et de Nantes : Mmes Amina BÉJI-BÉCHEUR, IRG ; Leïla DAMAK, LEGO ; Danielle PAILLER, LEMNA). De ce travail est issue une communication scientifique partagée lors d’un colloque à Djerba : « Renforcer la résilience climatique par une approche basée sur le care, les droits culturels et l'innovation sociale. Cas des îles Kerkennah ». Mariem REKIK (ONU-Habitat) assurait la coordination institutionnelle de ce projet."
+    ],
+    "partenaires": [
+      "un-habitat",
+      "eivp",
+      "lab-urba"
     ],
     "lien": "Kerkennah.html"
   },

@@ -4,6 +4,7 @@
     "nom": "Amina Béji-Bécheur",
     "projets": ["beni-khalled", "iles-kerkennah"],
     "image" : "https://irg-upec.univ-gustave-eiffel.fr/typo3temp/assets/_processed_/d/3/csm_photo_amina_2021_41746b3669.jpg",
+    "lien" : "#",
     "bio": [
       "Amina BÉJI-BÉCHEUR est coordinatrice de la chaire ISCI-MENA à l’Université Gustave Eiffel.",
       "Ce poste est à l'intersection de ses deux principales activités : celle en relations internationales et celle de professeur de gestion.",
@@ -13,8 +14,10 @@
   },
   {
     "id": "farah-sayem",
+    "projets": ["beni-khalled", "iles-kerkennah"],
     "nom": "Farah SAYEM",
     "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/3/8/csm_Farah-SAYEM-N_B_9569f67da9.png",
+    "lien" : "#",
     "imageAlt": "Portrait de Farah Sayem",
     "bio": [
       "Farah Sayem (1996) est curatrice et opératrice culturelle basée à Tunis. Elle s’intéresse aux dimensions physiques et politiques des espaces urbains, publics et communs, en interrogeant leur lien avec les pratiques sociales et culturelles de leurs habitant·e·s.",

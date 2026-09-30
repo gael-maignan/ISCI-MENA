@@ -12,7 +12,7 @@
 
      data/contenus/    contenus ajoutés au fil de l'eau
        actualites.json, publications.json, projets.json,
-       personnes.json, evenements.json
+       personnes.json, evenements.json, partenaires.json
 
    ---------------------------------------------------------
    CONTENUS : tout conteneur portant  data-source="xxx"  est
@@ -52,6 +52,16 @@
        data-limit-avenir  (optionnel) nb d'évènements à venir
                           affichés avant « Afficher plus » (déf. 6)
        data-limit-passes  (optionnel) idem pour les passés (déf. 4)
+
+   PROJET (fiche détaillée d'un projet) :
+     data-projet="id-du-projet"  conteneur de la section Projet.
+       Affiche : pays, titre, image, description du projet ;
+       un volet listant tous les projets par pays (liens vers
+       leurs pages, projet courant mis en évidence) ;
+       les publications dont "projets" contient cet id ;
+       les personnes dont "projets" contient cet id (avec photo) ;
+       les partenaires listés dans le champ "partenaires" du
+       projet (ids de data/contenus/partenaires.json).
 
    NOUVEL ONGLET : dans n'importe quel JSON, un élément qui a un
    "lien" peut ajouter  "nouvelOnglet": true  pour que ce lien
@@ -911,6 +921,156 @@
   }
 
   /* ---------------------------------------------------------
+     Fiche projet (data-projet="id")
+     ---------------------------------------------------------
+     projets.json      titre, pays, image, description (liste de
+                       paragraphes), "partenaires": ["id", ...]
+     publications.json "projets": ["id-projet", ...]
+     personnes.json    "projets": ["id-projet", ...]
+     partenaires.json  { "categories": [{ id, titre }, ...],
+                         "<id-categorie>": [{ id, nom, image, lien,
+                                              nouvelOnglet }, ...] }
+     Un partenaire sans image est affiché par son nom ; sans lien,
+     il n'est pas cliquable. Un bloc vide n'est pas affiché.
+     --------------------------------------------------------- */
+
+  // id -> partenaire (avec le titre de sa catégorie)
+  function indexerPartenaires(donnees) {
+    const index = new Map();
+    if (!donnees || typeof donnees !== "object") return index;
+    const categories = Array.isArray(donnees.categories) ? donnees.categories : [];
+    const titres = new Map(categories.map((c) => [c.id, c.titre]));
+    Object.keys(donnees)
+      .filter((cle) => cle !== "categories" && Array.isArray(donnees[cle]))
+      .forEach((cle) => {
+        donnees[cle].filter(publie).forEach((p) => {
+          index.set(p.id, { ...p, categorieTitre: titres.get(cle) || "" });
+        });
+      });
+    return index;
+  }
+
+  const initiales = (nom) => String(nom || "")
+    .split(/[\s-]+/).filter(Boolean).slice(0, 2)
+    .map((m) => m.charAt(0).toUpperCase()).join("");
+
+  function htmlBlocProjet(titre, modificateur, contenu) {
+    if (!contenu) return "";
+    return `
+          <section class="pt-groupe projet__bloc projet__bloc--${modificateur}">
+            <header class="pt-groupe__entete">
+              <h3 class="pt-groupe__titre">${esc(titre)}</h3>
+              <span class="pt-groupe__trait"></span>
+            </header>
+            ${contenu}
+          </section>`;
+  }
+
+  function htmlEquipe(personnes) {
+    if (!personnes.length) return "";
+    return `<ul class="projet__equipe">${personnes.map((p) => {
+      const photo = p.image
+        ? `<img class="projet__photo" src="${url(p.image)}" alt="" loading="lazy">`
+        : `<span class="projet__photo projet__photo--initiales" aria-hidden="true">${esc(initiales(p.nom))}</span>`;
+      const nom = `<span class="projet__nom">${esc(p.nom)}</span>`;
+      const contenu = `${photo}${nom}${p.fonction ? `<span class="projet__fonction">${esc(p.fonction)}</span>` : ""}`;
+      return `<li>${p.lien && p.lien !== "#"
+        ? `<a class="projet__personne" href="${esc(p.lien)}"${cible(p)}>${contenu}</a>`
+        : `<div class="projet__personne">${contenu}</div>`}</li>`;
+    }).join("")}</ul>`;
+  }
+
+  function htmlPartenaires(partenaires) {
+    if (!partenaires.length) return "";
+    return `<ul class="projet__partenaires">${partenaires.map((p) => {
+      const visuel = p.image
+        ? `<img src="${url(p.image)}" alt="${esc(p.nom)}" loading="lazy">`
+        : `<span class="projet__logo-texte">${esc(p.nom)}</span>`;
+      const contenu = `
+              <span class="projet__logo">${visuel}</span>
+              <span class="projet__partenaire-nom">${esc(p.nom)}</span>
+              ${p.categorieTitre ? `<span class="projet__partenaire-cat">${esc(p.categorieTitre)}</span>` : ""}`;
+      return `<li>${p.lien
+        ? `<a class="projet__partenaire" href="${esc(p.lien)}"${cible(p)}>${contenu}</a>`
+        : `<div class="projet__partenaire">${contenu}</div>`}</li>`;
+    }).join("")}</ul>`;
+  }
+
+  function htmlVoletProjets(projets, idCourant) {
+    const groupes = grouperParPays(projets);
+    return `
+        <aside class="projet__volet" aria-labelledby="projet-volet-titre">
+          <h3 id="projet-volet-titre" class="projet__volet-titre">Tous les projets</h3>
+          ${groupes.map((g) => `
+          <div class="projet__volet-groupe">
+            <h4 class="projet__volet-pays">${esc(g.titre)}</h4>
+            <ul>
+              ${g.liens.map((pr) => pr.id === idCourant
+                ? `<li><span class="projet__volet-lien is-actif" aria-current="page">${esc(pr.titre)}</span></li>`
+                : `<li><a class="projet__volet-lien" href="${esc(pr.lien || "#")}"${cible(pr)}>${esc(pr.titre)}</a></li>`).join("")}
+            </ul>
+          </div>`).join("")}
+        </aside>`;
+  }
+
+  async function construireProjet(zone) {
+    const id = zone.dataset.projet;
+    try {
+      const [projets, publications, personnes, partenaires] = await Promise.all([
+        charger("projets"),
+        charger("publications").catch(() => []),
+        charger("personnes").catch(() => []),
+        charger("partenaires").catch((err) => {
+          console.warn("[contenus] Projet : data/contenus/partenaires.json illisible :", err);
+          return {};
+        }),
+        chargerCategories(),
+      ]);
+
+      const tous = projets.filter(publie);
+      const projet = tous.find((pr) => pr.id === id);
+      if (!projet) {
+        console.error(`[contenus] Projet : "${id}" introuvable dans data/contenus/projets.json`);
+        return;
+      }
+
+      const lie = (el) => Array.isArray(el.projets) && el.projets.includes(id);
+      const pubs = trierParDate(publications.filter((el) => publie(el) && lie(el)));
+      const equipe = personnes.filter((el) => publie(el) && lie(el));
+
+      const indexPart = indexerPartenaires(partenaires);
+      const parts = (Array.isArray(projet.partenaires) ? projet.partenaires : []).map((pid) => {
+        if (!indexPart.has(pid)) console.warn(`[contenus] Projet "${id}" : partenaire "${pid}" introuvable dans partenaires.json`);
+        return indexPart.get(pid);
+      }).filter(Boolean);
+
+      const paragraphes = (Array.isArray(projet.description) ? projet.description : [projet.description])
+        .filter(Boolean).map((t) => `<p>${esc(t)}</p>`).join("");
+      const pays = (projet.pays || []).map((p) => `<span class="pt-tag">${esc(nomPays(p))}</span>`).join("");
+
+      zone.innerHTML = `
+      <div class="projet__grille">
+        <article class="projet__principal" aria-labelledby="projet-titre">
+          <header class="projet__entete">
+            ${pays ? `<div class="projet__tags">${pays}</div>` : ""}
+            <h2 id="projet-titre" class="projet__titre">${esc(projet.titre)}</h2>
+          </header>
+          ${projet.image ? `<figure class="projet__image"><img src="${url(projet.image)}" alt="${esc(projet.imageAlt || projet.titre)}" loading="lazy"></figure>` : ""}
+          ${paragraphes ? `<div class="projet__texte">${paragraphes}</div>` : ""}
+          ${htmlBlocProjet("Publications scientifiques", "publications",
+            pubs.length ? `<div class="pt-grille pt-grille--publications">${pubs.map(carteArticle).join("")}</div>` : "")}
+          ${htmlBlocProjet("L'équipe du projet", "equipe", htmlEquipe(equipe))}
+          ${htmlBlocProjet("Partenaires", "partenaires", htmlPartenaires(parts))}
+        </article>
+        ${htmlVoletProjets(tous, id)}
+      </div>`;
+      zone.setAttribute("aria-busy", "false");
+    } catch (err) {
+      console.error(`[contenus] Projet "${id}" : impossible de charger les données :`, err);
+    }
+  }
+
+  /* ---------------------------------------------------------
      Chargement (avec cache : un fichier n'est lu qu'une fois
      même s'il alimente plusieurs blocs de la page)
      --------------------------------------------------------- */
@@ -969,6 +1129,7 @@
     construireNavigation();
     construireCarrousel();
     construireAgenda();
+    document.querySelectorAll("[data-projet]").forEach(construireProjet);
   }
 
   if (document.readyState === "loading") {
