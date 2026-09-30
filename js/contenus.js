@@ -59,7 +59,8 @@
        un volet listant tous les projets par pays (liens vers
        leurs pages, projet courant mis en évidence) ;
        les publications dont "projets" contient cet id ;
-       les personnes dont "projets" contient cet id (avec photo) ;
+       les personnes dont "projets" contient cet id (avec photo ;
+       carte cliquable si la personne a un "lien") ;
        les partenaires listés dans le champ "partenaires" du
        projet (ids de data/contenus/partenaires.json).
 
@@ -974,8 +975,9 @@
         : `<span class="projet__photo projet__photo--initiales" aria-hidden="true">${esc(initiales(p.nom))}</span>`;
       const nom = `<span class="projet__nom">${esc(p.nom)}</span>`;
       const contenu = `${photo}${nom}${p.fonction ? `<span class="projet__fonction">${esc(p.fonction)}</span>` : ""}`;
-      return `<li>${p.lien && p.lien !== "#"
-        ? `<a class="projet__personne" href="${esc(p.lien)}"${cible(p)}>${contenu}</a>`
+      // Carte cliquable dès que la personne a un "lien" (page de profil)
+      return `<li>${p.lien
+        ? `<a class="projet__personne" href="${esc(p.lien)}"${cible(p)}>${contenu}<span class="projet__profil">Voir le profil</span></a>`
         : `<div class="projet__personne">${contenu}</div>`}</li>`;
     }).join("")}</ul>`;
   }
@@ -998,9 +1000,10 @@
 
   function htmlVoletProjets(projets, idCourant) {
     const groupes = grouperParPays(projets);
+    const idTitre = `projet-${esc(idCourant)}-volet-titre`;
     return `
-        <aside class="projet__volet" aria-labelledby="projet-volet-titre">
-          <h3 id="projet-volet-titre" class="projet__volet-titre">Tous les projets</h3>
+        <aside class="projet__volet" aria-labelledby="${idTitre}">
+          <h3 id="${idTitre}" class="projet__volet-titre">Tous les projets</h3>
           ${groupes.map((g) => `
           <div class="projet__volet-groupe">
             <h4 class="projet__volet-pays">${esc(g.titre)}</h4>
@@ -1050,10 +1053,10 @@
 
       zone.innerHTML = `
       <div class="projet__grille">
-        <article class="projet__principal" aria-labelledby="projet-titre">
+        <article class="projet__principal" aria-labelledby="projet-${esc(id)}-titre">
           <header class="projet__entete">
             ${pays ? `<div class="projet__tags">${pays}</div>` : ""}
-            <h2 id="projet-titre" class="projet__titre">${esc(projet.titre)}</h2>
+            <h2 id="projet-${esc(id)}-titre" class="projet__titre">${esc(projet.titre)}</h2>
           </header>
           ${projet.image ? `<figure class="projet__image"><img src="${url(projet.image)}" alt="${esc(projet.imageAlt || projet.titre)}" loading="lazy"></figure>` : ""}
           ${paragraphes ? `<div class="projet__texte">${paragraphes}</div>` : ""}
