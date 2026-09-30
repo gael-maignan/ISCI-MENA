@@ -1,0 +1,61 @@
+[
+  {
+    "id": "medina-de-tunis",
+    "pays": [
+      "tunisie"
+    ],
+    "titre": "Médina de Tunis",
+    "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/a/e/csm_rue-des-teinturiers-medina-de-tunis-avant-1900-0833d7-small_5b637d9bd4.jpg",
+    "description": [
+      "La Médina de Tunis est patrimoine mondial de l’UNESCO depuis 1979. Connue pour son architecture historique et son artisanat ancestral, depuis 2011, elle rayonne également par une nouvelle activité culturelle bourgeonnante. Cette effusion impulsée par des acteurs non institutionnels, des associations à but non lucratif et des habitants contribue à régénérer la médina.",
+      "Afin de comprendre ce mécanisme, les chercheurs Eric GAUTIER LAURENT (Université Gustave Eiffel) et Meriem MAAZOUL (ESSEC Tunis) ont conduit une ethnographie au sein de la médina, appuyés par Mariem REKIK (ONU-Habitat Tunis)."
+    ],
+    "lien": "url de la page du projet..."
+  },
+  {
+    "id": "jdid",
+    "pays": [
+      "tunisie"
+    ],
+    "titre": "JDID",
+    "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/7/e/csm_Slide3_e10f4d9a11.jpg",
+    "description": [
+      "La Médina de Tunis est patrimoine mondial de l’UNESCO depuis 1979. Connue pour son architecture historique et son artisanat ancestral, depuis 2011, elle rayonne également par une nouvelle activité culturelle bourgeonnante. Cette effusion impulsée par des acteurs non institutionnels, des associations à but non lucratif et des habitants contribue à régénérer la médina.",
+      "Afin de comprendre ce mécanisme, les chercheurs Eric GAUTIER LAURENT (Université Gustave Eiffel) et Meriem MAAZOUL (ESSEC Tunis) ont conduit une ethnographie au sein de la médina, appuyés par Mariem REKIK (ONU-Habitat Tunis)."
+    ],
+    "lien": "url de la page du projet..."
+  },
+  {
+    "id": "plateforme-des-odd",
+    "pays": [
+      "tunisie",
+      "maroc"
+    ],
+    "titre": "Plateforme des ODD",
+    "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/e/2/csm_Stage-Livia_078d89a752.jpg",
+    "description": [
+      "La localisation des Objectifs de Développement Durable (ODD) est un enjeu central de l’Agenda 2030. Pour construire des politiques publiques efficaces, les collectivités locales doivent être capables de mesurer leurs progrès et d’évaluer l’impact de leurs actions sur le développement durable."
+    ],
+    "lien": "url de la page du projet..."
+  },
+  {
+    "id": "iles-kerkennah",
+    "pays": ["tunisie"],
+    "titre": "Îles Kerkennah",
+    "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/contributeurs/ISCI-MENA/IMG_1479.JPG",
+    "description": [
+      "Situé dans le golfe de Gabès, en Tunisie, l’archipel des Kerkennah est confronté à la montée des eaux. Plusieurs facteurs humains aggravant la situation. La reconnexion aux pratiques de soin mutuel et aux savoirs endogènes pourrait constituer un levier essentiel pour repenser les stratégies d’adaptation de l'île."
+    ],
+    "lien": "Kerkennah.html"
+  },
+  {
+    "id": "beni-khalled",
+    "pays": ["tunisie"],
+    "titre": "Béni Khalled",
+    "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/b/5/csm_BK-23.09.07_7dce9718d2.jpg",
+    "description": [
+      "Béni Khalled est une ville tunisienne réputée pour ses oranges. Elle fait face à un problème de déchets sauvages des fruits non calibrés pour la consommation. Pour y remédier, les femmes artisanes de la région ont monté des activités informelles de transformation des déchets d’agrumes."
+    ],
+    "lien": "beni-khalled.html"
+  }
+]

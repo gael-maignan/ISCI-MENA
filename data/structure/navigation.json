@@ -1,0 +1,68 @@
+{
+  "navigationSuperieure": [
+    { "titre": "Programmes", "lien": "#" },
+    { "titre": "Media centre", "lien": "#" },
+    { "titre": "Get involved", "lien": "#" },
+    { "titre": "Events", "lien": "#" }
+  ],
+
+  "menu": [
+    {
+      "id": "a-propos",
+      "titre": "À propos",
+      "lien": "#",
+      "sousMenu": [
+        { "id": "la-chaire", "titre": "La Chaire", "lien": "#" },
+        { "id": "membres-partenaires", "titre": "Membres & partenaires", "lien": "#" },
+        { "id": "methode", "titre": "Méthode", "lien": "#" },
+        { "id": "gouvernance", "titre": "Gouvernance", "lien": "#" }
+      ]
+    },
+    {
+      "id": "projets",
+      "titre": "Projets",
+      "lien": "#",
+      "sousMenuAuto": {
+        "source": "projets",
+        "grouperPar": "pays"
+      }
+    },
+    {
+      "id": "evenements",
+      "titre": "Évènements",
+      "lien": "#",
+      "sousMenu": [
+        { "id": "enquetes-de-terrain", "titre": "Enquêtes de terrain", "lien": "test.html" },
+        { "id": "ateliers", "titre": "Ateliers", "lien": "#" },
+        { "id": "stages", "titre": "Stages", "lien": "#" },
+        { "id": "seminaires-et-conferences", "titre": "Séminaires et conférences", "lien": "#" }
+      ]
+    },
+    {
+      "id": "publications",
+      "titre": "Publications",
+      "lien": "#",
+      "sousMenu": [
+        { "id": "ouvrages-et-articles-scientifiques", "titre": "Ouvrages et articles scientifiques", "lien": "#" },
+        { "id": "revue-de-presse", "titre": "Revue de presse", "lien": "#" }
+      ]
+    },
+    {
+      "id": "agenda",
+      "titre": "Agenda",
+      "lien": "#agenda",
+      "bouton": true,
+      "mobile": false
+    }
+  ],
+
+  "reseauxSociaux": {
+    "titre": "Connect",
+    "liens": [
+      { "nom": "LinkedIn",  "icone": "images/social/linkedin.png",  "lien": "https://www.linkedin.com/company/chaire-isci-mena/" },
+      { "nom": "Instagram", "icone": "images/social/instagram.png", "lien": "#" },
+      { "nom": "Facebook",  "icone": "images/social/facebook.png",  "lien": "#" },
+      { "nom": "YouTube",   "icone": "images/social/youtube.png",   "lien": "#", "publie": false }
+    ]
+  }
+}

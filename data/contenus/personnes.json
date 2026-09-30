@@ -1,0 +1,25 @@
+[
+   {
+    "id": "amina-beji-becheur",
+    "nom": "Amina Béji-Bécheur",
+    "projets": ["beni-khalled", "iles-kerkennah"],
+    "image" : "https://irg-upec.univ-gustave-eiffel.fr/typo3temp/assets/_processed_/d/3/csm_photo_amina_2021_41746b3669.jpg",
+    "bio": [
+      "Amina BÉJI-BÉCHEUR est coordinatrice de la chaire ISCI-MENA à l’Université Gustave Eiffel.",
+      "Ce poste est à l'intersection de ses deux principales activités : celle en relations internationales et celle de professeur de gestion.",
+      "Directrice du Développement et des Relations Internationales à l’EIVP, Vice-Présidente International déléguée à la région MENA à l’Université, elle est également co-responsable du Master Gestion des Entreprises Sociales et Solidaires.",
+      "Elle a participé à plusieurs ateliers et projets de la chaire en tant que chercheuse, comme à Béni Khalled ou aux Îles Kerkennah.",
+      "Active dans la vie associative, elle a été présidente de l’Association Française de Marketing."    ]
+  },
+  {
+    "id": "farah-sayem",
+    "nom": "Farah SAYEM",
+    "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/3/8/csm_Farah-SAYEM-N_B_9569f67da9.png",
+    "imageAlt": "Portrait de Farah Sayem",
+    "bio": [
+      "Farah Sayem (1996) est curatrice et opératrice culturelle basée à Tunis. Elle s’intéresse aux dimensions physiques et politiques des espaces urbains, publics et communs, en interrogeant leur lien avec les pratiques sociales et culturelles de leurs habitant·e·s.",
+      "Son travail examine le rôle de ces espaces dans la transformation des paysages urbains. Elle explore également les notions d’autogestion, de communs urbains artistiques et les enjeux politiques de ces structures comme formes de résistance face aux conséquences sociales du néolibéralisme.",
+      "Depuis avril 2020, elle est activement engagée dans la société civile, développant des projets culturels qui promeuvent la démocratisation de l'activité artistique. Son parcours professionnel est axé sur la curation et la gestion de projets. Elle a collaboré avec L’Art Rue sur le festival Dream City, le Collectif Créatif, les Journées Musicales de Carthage, La Boîte : lieu d’architecture et d’art contemporain, Gabes Cinéma Fen, ONU Femmes Tunisie, ainsi que El Warcha collaborative design studio Tunis.",
+      "Farah est titulaire d’un master en design produit (ESSTED) et d’un second master en management social et solidaire (ISG Tunis). Elle a également été membre du collectif TASAWAR CURATORIAL STUDIOS 3."    ]
+  }
+]

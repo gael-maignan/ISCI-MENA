@@ -1,0 +1,11 @@
+{
+  "carrousel": {
+    "elements": [
+      "housing-experts-integrated-approaches",
+      "world-urban-forum-2026",
+      "jdid"
+    ],
+    "delai": 6000,
+    "texteBouton": "En savoir plus"
+  }
+}

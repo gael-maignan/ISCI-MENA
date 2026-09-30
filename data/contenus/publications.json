@@ -1,0 +1,68 @@
+[
+  {
+    "id": "resilience-climatique-kerkennah",
+    "date": "2026-09-01",
+    "pays": ["Tunisie"],
+    "type": "Global Fepport",
+    "personnes": ["amina-beji-becheur"],
+    "categorie": "ouvrages-et-articles-scientifiques",
+    "projets" : ["iles-kerkennah"],
+    "titre": "Renforcer la résilience climatique grâce à une approche fondée sur la solidarité, les droits culturels et l'innovation sociale : le cas des communautés des îles de Kerkennah",
+    "auteurs": "Leïla Damak, Amina Béji-Bécheur, Danielle Pailler, Aïda Robbana",
+    "description": "Cette publication analyse les stratégies de résilience climatique développées par les communautés des îles de Kerkennah, en mettant l'accent sur la solidarité, les droits culturels et l'innovation sociale.",
+    "image": "images/Renforcer la résilience climatique grâce à une approche fondée sur la solidarité, les droits culturels et l'innovation sociale  le cas des communautés des îles de Kerkennah.png",
+    "imageAlt": "Renforcer la résilience climatique grâce à une approche fondée sur la solidarité, les droits culturels et l'innovation sociale",
+    "lien": "#"
+  },
+  {
+    "id": "cles-recherche-partenariale",
+    "date": "2026-08-01",
+    "pays": ["France"],
+    "type": "Global Fepport",
+    "categorie": "ouvrages-et-articles-scientifiques",
+    "titre": "LES CLÉS POUR UNE RECHERCHE PARTENARIALE RÉUSSIE Retours d'expériences individuelles et collectives en sciences de gestion",
+    "auteurs": "Coordonné par Shérazade Gatfaoui et Éric Gautier Laurent",
+    "description": "Un ouvrage consacré aux pratiques de recherche partenariale, présentant des retours d'expérience et des enseignements issus de projets individuels et collectifs en sciences de gestion.",
+    "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/3/7/csm_LES_CLES_POUR_UNE_RECHERCHE_PARTENARIALE_REUSSIE_c4746494c4.png",
+    "imageAlt": "Les clés pour une recherche partenariale réussie",
+    "lien": "#"
+  },
+  {
+    "id": "design-universel-perspectives",
+    "date": "2026-07-01",
+    "type": "Global Fepport",
+    "categorie": "ouvrages-et-articles-scientifiques",
+    "titre": "LE DESIGN UNIVERSEL EN PERSPECTIVES La société inclusive est un projet collectif et participatif",
+    "auteurs": "Bachir Kerroumi",
+    "description": "Cette publication explore les principes du design universel et leur contribution à la construction d'une société inclusive, accessible et participative.",
+    "image": "images/design-universel.png",
+    "imageAlt": "Le design universel en perspectives",
+    "lien": "#"
+  },
+  {
+    "id": "organisations-alternatives-citoyennetes",
+    "date": "2026-06-01",
+    "type": "Global Fepport",
+    "personnes": ["amina-beji-becheur"],
+    "categorie": "ouvrages-et-articles-scientifiques",
+    "titre": "ORGANISATIONS ALTERNATIVES DES CITOYENNETÉS Récits d'expériences émancipatrices",
+    "auteurs": "Coordonné par Amina Béji-Bécheur et Audrey Bonnemaizon",
+    "description": "Un recueil de récits consacré aux formes alternatives de citoyenneté et aux expériences collectives qui favorisent l'émancipation et la participation citoyenne.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8VijwjW6cjmX7O8UM1JL3V08mGjJ2upU_k1eh7e2n_w&s=10",
+    "imageAlt": "Organisations alternatives des citoyennetés",
+    "lien": "#"
+  },
+  {
+    "id": "sociales-solidaires-ecologiques",
+    "date": "2026-05-01",
+    "type": "Annual Fepport",
+    "personnes": ["amina-beji-becheur"],
+    "categorie": "ouvrages-et-articles-scientifiques",
+    "titre": "« Sociales, solidaires, et écologiques ? Tensions et convergences des organisations de l’ESS »",
+    "auteurs": "",
+    "description": "Cette étude examine les tensions et les convergences entre les dimensions sociales, solidaires et écologiques des organisations de l'économie sociale et solidaire.",
+    "image": "images/gess.png",
+    "imageAlt": "Sociales, solidaires et écologiques",
+    "lien": "#"
+  }
+]

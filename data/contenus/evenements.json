@@ -1,0 +1,73 @@
+[
+  {
+    "id": "seminaire-communs-urbains-2026",
+    "titre": "Séminaire : les communs urbains face aux transitions",
+    "categorie": "seminaires-et-conferences",
+    "dateDebut": "2026-10-15",
+    "heureDebut": "14:00",
+    "heureFin": "17:30",
+    "lieu": "Université Gustave Eiffel, Champs-sur-Marne",
+    "description": "Chercheurs et praticiens croisent leurs regards sur la gouvernance des communs urbains dans la région MENA.",
+    "lien": "#",
+    "inscription": "#"
+  },
+  {
+    "id": "atelier-beni-khalled-2026",
+    "titre": "Atelier de co-conception avec les artisanes de Béni Khalled",
+    "categorie": "ateliers",
+    "dateDebut": "2026-11-04",
+    "dateFin": "2026-11-06",
+    "lieu": "Béni Khalled, Tunisie",
+    "description": "Trois jours d'ateliers pour prototyper de nouveaux produits issus de la valorisation des déchets d'agrumes.",
+    "lien": "beni-khalled.html",
+    "projets": ["beni-khalled"]
+  },
+  {
+    "id": "world-urban-forum-2026",
+    "titre": "World Urban Forum 13",
+    "categorie": "seminaires-et-conferences",
+    "dateDebut": "2026-05-17",
+    "dateFin": "2026-05-22",
+    "lieu": "Bakou, Azerbaïdjan",
+    "description": "La Chaire a présenté ses travaux sur l'innovation sociale lors du Forum urbain mondial.",
+    "lien": "https://wuf.unhabitat.org/wuf13",
+    "nouvelOnglet": true
+  },
+  {
+    "id": "hackathon-deipm-2026",
+    "titre": "DEIPM Master Hackathon",
+    "categorie": "stages",
+    "dateDebut": "2026-07-10",
+    "dateFin": "2026-07-11",
+    "lieu": "Université Gustave Eiffel, Champs-sur-Marne",
+    "lien": "#"
+  },
+  {
+    "id": "soutenance-farah-sayem",
+    "titre": "Soutenance de thèse de Farah Sayem",
+    "categorie": "seminaires-et-conferences",
+    "dateDebut": "2026-06-26",
+    "heureDebut": "10:00",
+    "lieu": "Tunis, Tunisie",
+    "lien": "#"
+  },
+  {
+    "id": "atelier-medina-2026",
+    "titre": "Atelier participatif dans la Médina de Tunis",
+    "categorie": "ateliers",
+    "dateDebut": "2026-03-12",
+    "lieu": "Médina de Tunis, Tunisie",
+    "lien": "#",
+    "projets": ["medina-de-tunis"]
+  },
+  {
+    "id": "stage-terrain-kerkennah-2026",
+    "titre": "Stage de terrain : Kerkennah",
+    "categorie": "stages",
+    "dateDebut": "2026-02-02",
+    "dateFin": "2026-02-20",
+    "lieu": "Îles Kerkennah, Tunisie",
+    "lien": "#",
+    "projets": ["iles-kerkennah"]
+  }
+]

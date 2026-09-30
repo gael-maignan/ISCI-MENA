@@ -13,6 +13,7 @@
     rel="stylesheet"
   >
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
 
 <style>
   /* =========================================================
@@ -92,74 +93,18 @@
     <div class="header-content">
 
       <!-- Navigation supérieure -->
-      <nav class="top-nav">
-        <a href="#">PROGRAMMES</a>
-        <a href="#">MEDIA CENTRE</a>
-        <a href="#">GET INVOLVED</a>
-        <a href="#">EVENTS</a>
-      </nav>
+      <!-- Rempli automatiquement depuis data/structure/navigation.json -->
+      <nav class="top-nav" aria-label="Navigation supérieure" data-nav="superieure"></nav>
 
 
       <!-- ===================================================
            NAVIGATION PRINCIPALE
            =================================================== -->
 
-      <nav class="main-nav" aria-label="Navigation principale">
-
-        <!-- À PROPOS -->
-        <div class="nav-item">
-          <a href="#" class="nav-link">À PROPOS</a>
-          <div class="mega-menu" aria-label="Sous-menu À propos">
-            <div class="mega-column">
-              <a href="#">La Chaire</a>
-              <a href="#">Membres & partenaires</a>
-              <a href="#">Méthode</a>
-              <a href="#">Gouvernance</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- PROJETS -->
-        <div class="nav-item">
-          <a href="#" class="nav-link">PROJETS</a>
-          <div class="mega-menu" aria-label="Sous-menu Projets">
-            <div class="mega-column">
-              <a href="#">Thèse</a>
-              <a href="#">Plateforme des ODD</a>
-              <a href="#">Béni Khalled</a>
-              <a href="#">Médina de Tunis</a>
-              <a href="#">Îles Kerkennah</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- ÉVÈNEMENTS -->
-        <div class="nav-item">
-          <a href="#" class="nav-link">ÉVÈNEMENTS</a>
-          <div class="mega-menu" aria-label="Sous-menu Évènements">
-            <div class="mega-column">
-              <a href="#">Enquêtes de terrain</a>
-              <a href="#">Ateliers et stages</a>
-              <a href="#">Séminaires et conférences</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- PUBLICATIONS -->
-        <div class="nav-item">
-          <a href="#" class="nav-link">PUBLICATIONS</a>
-          <div class="mega-menu" aria-label="Sous-menu Publications">
-            <div class="mega-column">
-              <a href="#">Ouvrages et articles scientifiques</a>
-              <a href="#">Revue de presse</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- AGENDA -->
-        <a href="#" class="donate no-mobile">AGENDA</a>
-
-      </nav>
+      <!-- Rempli automatiquement depuis data/structure/navigation.json
+           (catégories, liens et sous-menus ; le sous-menu Projets est
+           généré depuis data/contenus/projets.json, une colonne par pays) -->
+      <nav class="main-nav" aria-label="Navigation principale" data-nav="principale"></nav>
 
     </div>
 
@@ -300,6 +245,7 @@
 
   .top-nav a {
     padding: 0 14px;
+    text-transform: uppercase;
 
     color: #666;
     text-decoration: none;
@@ -363,6 +309,7 @@
     font-weight: 700;
 
     text-decoration: none;
+    text-transform: uppercase;
     white-space: nowrap;
   }
 
@@ -479,13 +426,28 @@
     border-right: 1px solid rgba(255, 255, 255, 0.35);
   }
 
-  .mega-column:first-child {
+  .mega-column:first-of-type {
     padding-left: 0;
   }
 
-  .mega-column:last-child {
+  .mega-column:last-of-type {
     padding-right: 0;
     border-right: 0;
+  }
+
+  /* Titre de colonne (ex : pays dans le menu Projets) */
+  .mega-title {
+    margin: 0 0 16px;
+    padding-bottom: 8px;
+
+    color: #201D5B;
+
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
   }
 
   .mega-menu a {
@@ -511,6 +473,50 @@
     color: #201D5B;
   }
 
+  /* Lien "Tout voir : <catégorie>" : mobile uniquement (sur ordinateur,
+     le titre de la catégorie dans la barre de menu est déjà cliquable) */
+  .mega-menu .mega-rubrique {
+    display: none;
+  }
+
+
+  /* =========================================================
+     MÉGA MENU PAR PAYS (Projets) — ordinateur uniquement
+     Le nombre de colonnes par ligne (--nb-colonnes) et la
+     classe .mega-column--debut (1re colonne de chaque ligne)
+     sont calculés par js/contenus.js selon le nombre de pays.
+     ========================================================= */
+
+  @media (min-width: 851px) {
+
+    .mega-menu--pays {
+      grid-template-columns: repeat(var(--nb-colonnes, 3), minmax(0, 1fr));
+      row-gap: 32px;
+
+      /* Menu très long : défilement interne plutôt que débordement */
+      max-height: calc(100vh - 124px);
+      overflow-y: auto;
+    }
+
+    .mega-menu--pays .mega-column,
+    .mega-menu--pays .mega-column:first-of-type,
+    .mega-menu--pays .mega-column:last-of-type {
+      padding: 0 32px;
+      border-right: 0;
+      border-left: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .mega-menu--pays .mega-column.mega-column--debut {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .mega-menu--pays a {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+  }
+
 
   /* =========================================================
      BOUTON AGENDA
@@ -526,6 +532,7 @@
     color: #fff !important;
 
     text-decoration: none;
+    text-transform: uppercase;
   }
 
   .donate:hover {
@@ -794,15 +801,15 @@
     }
 
     .mega-column,
-    .mega-column:first-child,
-    .mega-column:last-child {
+    .mega-column:first-of-type,
+    .mega-column:last-of-type {
       padding: 0 0 14px;
 
       border-right: 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.35);
     }
 
-    .mega-column:last-child {
+    .mega-column:last-of-type {
       padding-bottom: 0;
       border-bottom: 0;
     }
@@ -824,6 +831,23 @@
 
     .mega-menu a {
       color: grey;
+    }
+
+    .mega-title {
+      margin-bottom: 10px;
+      color: #2F2A85;
+      border-bottom-color: #eee;
+    }
+
+    .mega-column + .mega-column {
+      padding-top: 14px;
+    }
+
+    .mega-menu .mega-rubrique {
+      display: block;
+      margin: 0 0 14px;
+      color: #2F2A85;
+      font-weight: 700;
     }
   }
 
@@ -956,7 +980,9 @@
        et au survol.
        ======================================================= -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    // Le menu est construit par js/contenus.js depuis
+    // data/structure/navigation.json : on attend qu'il soit prêt.
+    document.addEventListener('navigation:prete', () => {
       const mobileQuery = window.matchMedia('(max-width: 850px)');
       const isMobile = () => mobileQuery.matches;
 
@@ -1075,7 +1101,9 @@
        HERO / CARROUSEL D'ACTUALITÉS
        ======================================================= -->
 
-  <section class="hero" aria-label="Dernières actualités">
+  <!-- Diapositives générées automatiquement : actualités, publications
+       ou projets choisis dans data/structure/accueil.json (voir js/contenus.js) -->
+  <section class="hero" aria-label="Dernières actualités" data-carrousel>
 
     <div style="display: none;">
     <button class="hero-arrow hero-arrow--prev" type="button" aria-label="Actualité précédente">&#10094;</button>
@@ -1394,95 +1422,26 @@ background:
 
 
   <script>
-    (function () {
+    // Les diapositives sont construites par js/contenus.js à partir des
+    // éléments choisis dans data/structure/accueil.json. Ce script
+    // gère uniquement le défilement (auto, pastilles, flèches, swipe).
+    document.addEventListener("carrousel:pret", (evt) => {
 
-      /*
-       * =====================================================
-       * DONNÉES DES ACTUALITÉS
-       * (à remplacer par vos propres actualités / images)
-       * =====================================================
-       */
-
-      const slides = [
-        
-        {
-          image: "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/0/1/csm_Vue_aerienne_de_la_Grande_Mosquee_de_Kairouan__en_Tunisie_288b872169.jpg",
-          eyebrow: "Évènement",
-          title: "Conférence internationale sur les villes durables",
-          description: "Retrouvez les temps forts de notre conférence qui a réuni chercheurs, institutions et acteurs de terrain autour des enjeux urbains.",
-          link: "#"
-        },
-        {
-          image: "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/e/5/csm_chameau-el-agba_70afef97ce.png",
-          eyebrow: "Rapport",
-          title: "Atelier JDID",
-          description: "En arabe, JDID signifie « nouveau ». En français, c’est l’acronyme de « Jalons pour un Développement Immobilier Durable ». Débuté en 2022, il s’agit du 1er projet de la Chaire ISCI-MENA, à l’origine de sa fondation en novembre 2024.",
-          link: "#"
-        },/*
-        {
-          image: "https://images.unsplash.com/photo-1444723121867-7a241cacace9?q=80&w=1600&auto=format&fit=crop",
-          eyebrow: "Projet",
-          title: "Lancement d'un nouveau projet de recherche",
-          description: "Un nouveau projet vient de démarrer pour étudier l'impact des politiques publiques sur la résilience des territoires.",
-          link: "#"
-        },
-        {
-          image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1600&auto=format&fit=crop",
-          eyebrow: "Publication",
-          title: "Nouvelle étude sur la mobilité urbaine",
-          description: "Une analyse approfondie des pratiques de mobilité dans les grandes métropoles, avec des pistes concrètes pour les décideurs.",
-          link: "#"
-        }*/
-      ];
-
-      const AUTOPLAY_DELAY = 6000;
+      const AUTOPLAY_DELAY = (evt.detail && evt.detail.delai) || 6000;
 
       const hero = document.querySelector(".hero");
       const dotsContainer = hero.querySelector(".hero-dots");
       const prevBtn = hero.querySelector(".hero-arrow--prev");
       const nextBtn = hero.querySelector(".hero-arrow--next");
 
+      const slideEls = hero.querySelectorAll(".hero-slide");
+      const dotEls = dotsContainer.querySelectorAll(".hero-dot");
+      const total = slideEls.length;
+
       let current = 0;
       let timer = null;
 
-      /*
-       * ---------------------------------------------------
-       * Construction des slides et des pastilles
-       * ---------------------------------------------------
-       */
-
-      slides.forEach((slide, index) => {
-
-        const slideEl = document.createElement("div");
-        slideEl.className = "hero-slide";
-        slideEl.style.setProperty("--slide-image", `url("${slide.image}")`);
-        slideEl.setAttribute("role", "group");
-        slideEl.setAttribute("aria-roledescription", "slide");
-        slideEl.setAttribute("aria-label", `${index + 1} sur ${slides.length}`);
-
-        slideEl.innerHTML = `
-          <div class="hero-slide-content">
-            <span class="hero-eyebrow">${slide.eyebrow}</span>
-            <h2 class="hero-title">${slide.title}</h2>
-            <p class="hero-description">${slide.description}</p>
-            <a class="hero-link" href="${slide.link}">En savoir plus</a>
-          </div>
-        `;
-
-        hero.insertBefore(slideEl, dotsContainer);
-
-        const dot = document.createElement("button");
-        dot.type = "button";
-        dot.className = "hero-dot";
-        dot.setAttribute("role", "tab");
-        dot.setAttribute("aria-label", `Aller à l'actualité ${index + 1}`);
-        dot.addEventListener("click", () => goToSlide(index));
-
-        dotsContainer.appendChild(dot);
-      });
-
-      const slideEls = hero.querySelectorAll(".hero-slide");
-      const dotEls = dotsContainer.querySelectorAll(".hero-dot");
+      dotEls.forEach((dot, index) => dot.addEventListener("click", () => goToSlide(index)));
 
       /*
        * ---------------------------------------------------
@@ -1491,17 +1450,13 @@ background:
        */
 
       function showSlide(index) {
-
         slideEls.forEach((el, i) => el.classList.toggle("is-active", i === index));
         dotEls.forEach((el, i) => el.classList.toggle("is-active", i === index));
-
         current = index;
       }
 
       function goToSlide(index) {
-
-        const nextIndex = (index + slides.length) % slides.length;
-        showSlide(nextIndex);
+        showSlide((index + total) % total);
         restartAutoplay();
       }
 
@@ -1514,11 +1469,11 @@ background:
       }
 
       function startAutoplay() {
-        timer = setInterval(nextSlide, AUTOPLAY_DELAY);
+        clearInterval(timer);
+        if (total > 1) timer = setInterval(nextSlide, AUTOPLAY_DELAY);
       }
 
       function restartAutoplay() {
-        clearInterval(timer);
         startAutoplay();
       }
 
@@ -1527,6 +1482,9 @@ background:
 
       hero.addEventListener("mouseenter", () => clearInterval(timer));
       hero.addEventListener("mouseleave", startAutoplay);
+
+      // Une seule actualité : pas de pastille
+      if (total < 2) dotsContainer.hidden = true;
 
       /*
        * ---------------------------------------------------
@@ -1538,8 +1496,6 @@ background:
       const SWIPE_THRESHOLD = 40; // px minimum pour valider un swipe
       let touchStartX = 0;
       let touchStartY = 0;
-      let touchEndX = 0;
-      let touchEndY = 0;
 
       hero.addEventListener("touchstart", (e) => {
         const touch = e.changedTouches[0];
@@ -1549,14 +1505,8 @@ background:
 
       hero.addEventListener("touchend", (e) => {
         const touch = e.changedTouches[0];
-        touchEndX = touch.screenX;
-        touchEndY = touch.screenY;
-        handleSwipe();
-      }, { passive: true });
-
-      function handleSwipe() {
-        const deltaX = touchEndX - touchStartX;
-        const deltaY = touchEndY - touchStartY;
+        const deltaX = touch.screenX - touchStartX;
+        const deltaY = touch.screenY - touchStartY;
 
         // Ignore le swipe si le geste est surtout vertical
         // (l'utilisateur fait défiler la page, pas le carrousel).
@@ -1568,12 +1518,11 @@ background:
         } else {
           prevSlide(); // swipe vers la droite -> actualité précédente
         }
-      }
+      }, { passive: true });
 
       showSlide(0);
       startAutoplay();
-
-    })();
+    });
   </script>
 
 
@@ -1800,60 +1749,9 @@ background:
  
 
 
-<!-- Quand le site sera généré SEULES LES 5 dernières actualités de la base de données seront affichées ici -->
+<!-- Rempli automatiquement depuis data/actualites.json (5 plus récentes) -->
+    <div class="news-grid" data-source="actualites" data-limit="5" aria-busy="true"></div>
 
-    <div class="news-grid">
-      <article class="news-card news-card--large">
-        <img class="news-card__image" src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/0/1/csm_Vue_aerienne_de_la_Grande_Mosquee_de_Kairouan__en_Tunisie_288b872169.jpg" alt="Réunion de travail autour de l'habitat">
-        <div class="news-card__content">
-          <div class="news-card__meta"><span>STORY</span><span>4 September 2026</span></div>
-          <h3 class="news-card__title">Housing experts advance integrated approaches to adequate housing</h3>
-          <p class="news-card__description">A look at how researchers and practitioners are combining policy, design and community engagement to make housing more accessible and resilient.</p>
-        </div>
-        <a class="news-card__link" href="#" aria-label="Lire : Housing experts advance integrated approaches to adequate housing"></a>
-      </article>
- 
-      <article class="news-card news-card--large">
-        <img class="news-card__image" src="images/WUF2026.png" alt="Personne accueillie dans un logement">
-        <div class="news-card__content">
-          <div class="news-card__meta"><span>STORY</span><span>18 August 2026</span></div>
-          <h3 class="news-card__title">World Urban Forum - Mai 2026</h3>
-          <p class="news-card__description">Retour sur les temps forts du Forum urbain mondial 2026 et les engagements pris en faveur d'un développement urbain plus durable.</p>
-        </div>
-        <a class="news-card__link" href="#" aria-label="Lire : From fragile shelter to a lasting home in Somalia"></a>
-      </article>
- 
-      <article class="news-card news-card--small">
-        <img class="news-card__image" src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/7/9/csm_Farah-portrait_76112884ec.jpg" alt="Portrait de Farah Sayem">
-        <div class="news-card__content">
-          <div class="news-card__meta"><span>NEWS</span><span>13 August 2026</span></div>
-          <h3 class="news-card__title">Thèse : transformation des paysages urbains, étude comparée entre Marseille et Tunis</h3>
-          <p class="news-card__description">Farah Sayem présente les principaux résultats de sa thèse, consacrée à l'évolution comparée des paysages urbains à Marseille et à Tunis.</p>
-        </div>
-        <a class="news-card__link" href="#" aria-label="Lire : South Africa and UN-Habitat to strengthen partnership with new country office"></a>
-      </article>
- 
-      <article class="news-card news-card--small">
-        <img class="news-card__image" src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/9/e/csm_Capture_d_ecran_2026-06-05_154247_6287c0072b.png" alt="Participants à une conférence">
-        <div class="news-card__content">
-          <div class="news-card__meta"><span>NEWS</span><span>29 July 2026</span></div>
-          <h3 class="news-card__title">Nile News - Revue de presse</h3>
-          <p class="news-card__description">Un tour d'horizon des actualités et publications relayées cette semaine autour des enjeux urbains et territoriaux.</p>
-        </div>
-        <a class="news-card__link" href="#" aria-label="Lire : Build partnerships. Deliver impact."></a>
-      </article>
- 
-      <article class="news-card news-card--small">
-        <img class="news-card__image" src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/d/5/csm_1600df68-ae97-4337-ba79-0d71a9ff125c_b9fefc92ba.jpg" alt="Intervention lors d'une réunion internationale">
-        <div class="news-card__content">
-          <div class="news-card__meta"><span>NEWS</span><span>15 July 2026</span></div>
-          <h3 class="news-card__title">DEIPM Master Hackathon</h3>
-          <p class="news-card__description">Les étudiants du Master DEIPM se sont réunis le temps d'un hackathon consacré à l'innovation dans les politiques et projets urbains.</p>
-        </div>
-        <a class="news-card__link" href="#" aria-label="Lire : A decade to deliver"></a>
-      </article>
-    </div>
- 
     <div class="site-section__action">
       <a href="#" class="site-button">
         <span class="site-button__plus">+</span>
@@ -1945,6 +1843,11 @@ background:
   .news-card__meta span + span {
     margin-left: 6px;
   }
+
+  /* Titre de la catégorie en majuscules (comme ailleurs sur le site) */
+  .news-card__meta span:first-child {
+    text-transform: uppercase;
+  }
  
   .news-card__title {
     margin: 0;
@@ -2035,6 +1938,497 @@ background:
 
 
 
+
+
+
+
+
+<!-- =======================================================
+     AGENDA — rempli automatiquement depuis data/contenus/evenements.json
+     (onglets « À venir » / « Passés », voir js/contenus.js)
+     ======================================================= -->
+
+<section class="site-section agenda-section" id="agenda" aria-labelledby="agenda-titre">
+  <div class="site-section__container">
+
+    <header class="site-section__header">
+      <h2 id="agenda-titre" class="site-section__title">Agenda</h2>
+      <span class="site-section__line"></span>
+    </header>
+
+    <div class="agenda" data-agenda data-limit-avenir="6" data-limit-passes="4" aria-busy="true"></div>
+
+  </div>
+</section>
+
+<style>
+  /* =========================================================
+     AGENDA
+     ========================================================= */
+
+  .agenda-section {
+    --section-bg: #f5f6fa;
+    scroll-margin-top: 20px;
+  }
+
+  .agenda {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* --- Onglets À venir / Passés --- */
+  .agenda__onglets {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin: 0 auto 32px;
+    width: fit-content;
+    padding: 4px;
+    background: #fff;
+    border: 1px solid #dfe1ec;
+    border-radius: 999px;
+  }
+
+  .agenda__onglet {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 26px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #2F2A85;
+    font: 700 14px/1 "Roboto", sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .agenda__onglet:hover {
+    background: #eef0f8;
+  }
+
+  .agenda__onglet[aria-selected="true"] {
+    background: #2F2A85;
+    color: #fff;
+  }
+
+  .agenda__onglet:focus-visible {
+    outline: 3px solid #06ADD5;
+    outline-offset: 2px;
+  }
+
+  .agenda__nb {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 11px;
+    background: #eef0f8;
+    color: #2F2A85;
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+
+  .agenda__onglet[aria-selected="true"] .agenda__nb {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+  }
+
+  /* --- Liste --- */
+  .agenda__liste {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .evt {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr) auto;
+    grid-template-areas: "date corps actions";
+    align-items: center;
+    gap: 0 28px;
+    padding: 20px 24px 20px 20px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(20, 20, 60, 0.06);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .evt:hover {
+    box-shadow: 0 8px 24px rgba(47, 42, 133, 0.12);
+    transform: translateY(-1px);
+  }
+
+  .evt[hidden] {
+    display: none;
+  }
+
+  /* Pavé date */
+  .evt__date {
+    grid-area: date;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 6px;
+    background: #2F2A85;
+    color: #fff;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .evt__jour {
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .evt__mois {
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .evt__annee,
+  .evt__date-fin {
+    margin-top: 6px;
+    font-size: 12px;
+    opacity: 0.75;
+    white-space: nowrap;
+  }
+
+  .evt--en-cours .evt__date {
+    background: #06ADD5;
+  }
+
+  .evt--passe .evt__date {
+    background: #e6e7ee;
+    color: #555a70;
+  }
+
+  /* Corps */
+  .evt__corps {
+    grid-area: corps;
+    min-width: 0;
+  }
+
+  .evt__haut {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .evt__cat {
+    color: #06ADD5;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .evt--passe .evt__cat {
+    color: #777;
+  }
+
+  .evt__badge {
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: #06ADD5;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .evt__titre {
+    margin: 0 0 10px;
+    color: #111;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .evt__lien {
+    color: inherit;
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.25s ease, color 0.2s ease;
+  }
+
+  .evt__lien:hover,
+  .evt__lien:focus-visible {
+    color: #2F2A85;
+    background-size: 100% 1px;
+  }
+
+  .evt__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .evt__meta li {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .evt__meta svg,
+  .evt__btn svg {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    margin-top: 1px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .evt__meta svg {
+    color: #2F2A85;
+  }
+
+  .evt--passe .evt__meta svg {
+    color: #999;
+  }
+
+  .evt__desc {
+    margin: 10px 0 0;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Actions */
+  .evt__actions {
+    grid-area: actions;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .evt__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 9px 16px;
+    border: 1px solid #2F2A85;
+    background: transparent;
+    color: #2F2A85;
+    font: 700 13px/1.2 "Roboto", sans-serif;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .evt__btn--primaire {
+    background: #2F2A85;
+    color: #fff;
+  }
+
+  .evt__btn--primaire:hover {
+    background: #06ADD5;
+    border-color: #06ADD5;
+  }
+
+  .evt__btn--secondaire:hover {
+    background: #eef0f8;
+  }
+
+  .evt__btn--texte {
+    border-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .evt__btn--texte:hover {
+    color: #06ADD5;
+  }
+
+  .evt__btn:focus-visible {
+    outline: 3px solid #06ADD5;
+    outline-offset: 2px;
+  }
+
+  /* Afficher plus / vide */
+  .agenda__plus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    margin-top: 16px;
+    padding: 14px;
+    border: 1px dashed #b9bcd3;
+    background: transparent;
+    color: #2F2A85;
+    font: 700 14px/1 "Roboto", sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .agenda__plus:hover {
+    background: #fff;
+    border-color: #2F2A85;
+  }
+
+  .agenda__plus-nb {
+    font-weight: 400;
+    color: #666;
+  }
+
+  .agenda__vide {
+    margin: 0;
+    padding: 40px 20px;
+    background: #fff;
+    color: #666;
+    text-align: center;
+    font-size: 15px;
+  }
+
+  /* --- Tablette : actions sous le texte --- */
+  @media (max-width: 800px) {
+    .evt {
+      grid-template-columns: 80px minmax(0, 1fr);
+      grid-template-areas:
+        "date corps"
+        "date actions";
+      gap: 16px 20px;
+      align-items: start;
+    }
+
+    .evt__actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .evt__jour {
+      font-size: 26px;
+    }
+  }
+
+  /* --- Mobile --- */
+  @media (max-width: 600px) {
+    .agenda__onglets {
+      display: flex;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .agenda__onglet {
+      flex: 1;
+      justify-content: center;
+      padding: 12px 10px;
+      font-size: 13px;
+    }
+
+    .agenda__liste {
+      gap: 12px;
+    }
+
+    .evt {
+      grid-template-columns: 64px minmax(0, 1fr);
+      grid-template-areas:
+        "date corps"
+        "actions actions";
+      gap: 14px 14px;
+      padding: 14px;
+    }
+
+    .evt:hover {
+      transform: none;
+    }
+
+    .evt__date {
+      align-self: start;
+      padding: 10px 4px;
+    }
+
+    .evt__jour {
+      font-size: 22px;
+    }
+
+    .evt__mois {
+      font-size: 11px;
+    }
+
+    .evt__annee,
+    .evt__date-fin {
+      font-size: 10px;
+    }
+
+    .evt__titre {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .evt__meta {
+      flex-direction: column;
+      font-size: 13px;
+    }
+
+    .evt__desc {
+      font-size: 13px;
+    }
+
+    .evt__actions {
+      flex-direction: column;
+    }
+
+    .evt__btn {
+      width: 100%;
+      min-height: 44px;   /* cible tactile confortable */
+    }
+
+    .evt__btn--texte {
+      justify-content: flex-start;
+      min-height: 32px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .evt,
+    .evt__lien {
+      transition: none !important;
+    }
+  }
+</style>
+
+
+
+
 <section class="site-section publications">
   <div class="site-section__container">
 
@@ -2046,150 +2440,8 @@ background:
       </p>
     </header>
 
-    <div class="publications-grid">
-
-
-
-
-<!-- SEULES LES 5 dernières publications seront affichées ici -->
-
-
-
-      <!-- PUBLICATION 1 -->
-      <article class="publication-card">
-        <a href="#">
-          <div class="publication-image">
-            <img
-              src="images/Renforcer la résilience climatique grâce à une approche fondée sur la solidarité, les droits culturels et l'innovation sociale  le cas des communautés des îles de Kerkennah.png"
-              alt="Renforcer la résilience climatique grâce à une approche fondée sur la solidarité, les droits culturels et l'innovation sociale"
-            >
-          </div>
-
-          <span class="publication-category">GLOBAL REPORT</span>
-
-          <h3>
-            Renforcer la résilience climatique grâce à une approche fondée sur la solidarité, les droits culturels et l'innovation sociale : le cas des communautés des îles de Kerkennah
-          </h3>
-
-          <p class="publication-authors">
-            Leïla Damak, Amina Béji-Bécheur, Danielle Pailler, Aïda Robbana
-          </p>
-
-          <p class="publication-description">
-            Cette publication analyse les stratégies de résilience climatique développées par les communautés des îles de Kerkennah, en mettant l'accent sur la solidarité, les droits culturels et l'innovation sociale.
-          </p>
-        </a>
-      </article>
-
-
-      <!-- PUBLICATION 2 -->
-      <article class="publication-card">
-        <a href="#">
-          <div class="publication-image">
-            <img
-              src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/3/7/csm_LES_CLES_POUR_UNE_RECHERCHE_PARTENARIALE_REUSSIE_c4746494c4.png"
-              alt="Les clés pour une recherche partenariale réussie"
-            >
-          </div>
-
-          <span class="publication-category">GLOBAL REPORT</span>
-
-          <h3>
-            LES CLÉS POUR UNE RECHERCHE PARTENARIALE RÉUSSIE Retours d'expériences individuelles et collectives en sciences de gestion
-          </h3>
-
-          <p class="publication-authors">
-            Coordonné par Shérazade Gatfaoui et Éric Gautier Laurent
-          </p>
-
-          <p class="publication-description">
-            Un ouvrage consacré aux pratiques de recherche partenariale, présentant des retours d'expérience et des enseignements issus de projets individuels et collectifs en sciences de gestion.
-          </p>
-        </a>
-      </article>
-
-
-      <!-- PUBLICATION 3 -->
-      <article class="publication-card">
-        <a href="#">
-          <div class="publication-image">
-            <img
-              src="images/design-universel.png"
-              alt="Le design universel en perspectives"
-            >
-          </div>
-
-          <span class="publication-category">ANNUAL REPORT</span>
-
-          <h3>
-            LE DESIGN UNIVERSEL EN PERSPECTIVES La société inclusive est un projet collectif et participatif
-          </h3>
-
-          <p class="publication-authors">
-            Bachir Kerroumi
-          </p>
-
-          <p class="publication-description">
-            Cette publication explore les principes du design universel et leur contribution à la construction d'une société inclusive, accessible et participative.
-          </p>
-        </a>
-      </article>
-
-
-      <!-- PUBLICATION 4 -->
-      <article class="publication-card">
-        <a href="#">
-          <div class="publication-image">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8VijwjW6cjmX7O8UM1JL3V08mGjJ2upU_k1eh7e2n_w&s=10"
-              alt="Organisations alternatives des citoyennetés"
-            >
-          </div>
-
-          <span class="publication-category">FLAGSHIP REPORT</span>
-
-          <h3>
-            ORGANISATIONS ALTERNATIVES DES CITOYENNETÉS Récits d'expériences émancipatrices
-          </h3>
-
-          <p class="publication-authors">
-            Coordonné par Amina Béji-Bécheur et Audrey Bonnemaizon
-          </p>
-
-          <p class="publication-description">
-            Un recueil de récits consacré aux formes alternatives de citoyenneté et aux expériences collectives qui favorisent l'émancipation et la participation citoyenne.
-          </p>
-        </a>
-      </article>
-
-
-      <!-- PUBLICATION 5 -->
-      <article class="publication-card no-mobile">
-        <a href="#">
-          <div class="publication-image">
-            <img
-              src="images/gess.png"
-              alt="Sociales, solidaires et écologiques"
-            >
-          </div>
-
-          <span class="publication-category">TECHNICAL REPORT</span>
-
-          <h3>
-            « Sociales, solidaires, et écologiques ? Tensions et convergences des organisations de l’ESS »
-          </h3>
-
-          <!--<p class="publication-authors">
-            Auteur 1, Auteur 2, Auteur 3
-          </p>-->
-
-          <p class="publication-description">
-            Cette étude examine les tensions et les convergences entre les dimensions sociales, solidaires et écologiques des organisations de l'économie sociale et solidaire.
-          </p>
-        </a>
-      </article>
-
-    </div>
+    <!-- Rempli automatiquement depuis data/articles.json (5 plus récents) -->
+    <div class="publications-grid" data-source="publications" data-limit="5" aria-busy="true"></div>
 
     <div class="site-section__action">
       <a href="#" class="site-button">
@@ -2246,6 +2498,7 @@ background:
     font-size: 13px;
     font-weight: 700;
     line-height: 1.2;
+    text-transform: uppercase;
   }
 
   .publication-card h3 {
@@ -2540,121 +2793,15 @@ background:
 
 
 
-<!--
 
 
-<section class="site-section map">
+
+<section class="site-section text-media-section" aria-label="Portraits">
   <div class="site-section__container">
 
-    <header class="site-section__header">
-      <h2 class="site-section__title">Research and Publications</h2>
-      <span class="site-section__line"></span>
-      <p class="site-section__desc">
-        We publish research on the latest findings on sustainable urbanization.
-      </p>
-    </header>
+    <!-- Rempli automatiquement depuis data/personnes.json (la plus récente) -->
+    <div class="personnes-list" data-source="personnes" aria-busy="true"></div>
 
-    <div class="publications__iframe">
-
-      <div class="publications__map">
-        <iframe
-          src="map.html"
-          title="Research map"
-        ></iframe>
-      </div>
-
-      <div class="publications__content">
-        <h3>Méthode générale</h3>
-        <br>
-        <p>L’innovation sociale consiste à partir des besoins des personnes concernées pour remonter vers des solutions réalisables techniquement, pertinentes socialement, ayant un impact environnemental positif et viables sur le plan économique.</p>
-      </div>
-
-    </div>
-
-
-
-  </div>
-</section>
-<style>
-  @media (max-width: 768px) {
-  .map {
-    display: none;
-  }
-}
-
-.publications__iframe {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-}
-
-/* Carte à gauche */
-.publications__map {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-}
-
-.publications__map iframe {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-/* Texte à droite */
-.publications__content {
-  width: 100%;
-}
-
-.publications__content h3 {
-  margin-top: 0;
-}
-
-</style>
-
-
--->
-
-
-
-
-<section class="site-section text-media-section" aria-labelledby="text-media-section-title">
-  <div class="site-section__container">
- 
-    <header class="site-section__header">
-      <h2 id="text-media-section-title" class="site-section__title">Farah SAYEM</h2>
-      <span class="site-section__line"></span>
-    </header>
- 
-    <div class="text-media">
-      <img class="text-media__image"
-           src="https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/3/8/csm_Farah-SAYEM-N_B_9569f67da9.png"
-           alt="Description de l'image">
- 
-      <p>
-        
-Farah Sayem (1996) est curatrice et opératrice culturelle basée à Tunis. Elle s’intéresse aux dimensions physiques et politiques des espaces urbains, publics et communs, en interrogeant leur lien avec les pratiques sociales et culturelles de leurs habitant·e·s.
-      </p>
- <p>Son travail examine le rôle de ces espaces dans la transformation des paysages urbains. Elle explore également les notions d’autogestion, de communs urbains artistiques et les enjeux politiques de ces structures comme formes de résistance face aux conséquences sociales du néolibéralisme.
-
-</p>
-<p>Depuis avril 2020, elle est activement engagée dans la société civile, développant des projets culturels qui promeuvent la démocratisation de l'activité artistique. Son parcours professionnel est axé sur la curation et la gestion de projets. Elle a collaboré avec L’Art Rue sur le festival Dream City, le Collectif Créatif, les Journées Musicales de Carthage, La Boîte : lieu d’architecture et d’art contemporain, Gabes Cinéma Fen, ONU Femmes Tunisie, ainsi que El Warcha collaborative design studio Tunis.</p>
-
-<p>Farah est titulaire d’un master en design produit (ESSTED) et d’un second master en management social et solidaire (ISG Tunis). Elle a également été membre du collectif TASAWAR CURATORIAL STUDIOS 3.</p>
-    </div>
- 
-    <!-- Optionnel : même bouton d'action que sur les autres sections du site -->
-    <!--
-    <div class="site-section__action">
-      <a href="#" class="site-button">
-        <span class="site-button__plus">+</span>
-        <span>EN SAVOIR PLUS</span>
-      </a>
-    </div>
-    -->
- 
   </div>
 </section>
 
@@ -2676,7 +2823,8 @@ Farah Sayem (1996) est curatrice et opératrice culturelle basée à Tunis. Elle
  
   .text-media__image {
     float: left;
-    width: 42%;
+    width: 25%;          /* répartition image / texte : 25 / 75 */
+    min-width: 160px;    /* reste lisible sur tablette */
     height: auto;
     margin: 4px 28px 20px 0;
     border-radius: 4px;
@@ -2689,7 +2837,372 @@ Farah Sayem (1996) est curatrice et opératrice culturelle basée à Tunis. Elle
   .text-media p:last-child {
     margin-bottom: 0;
   }
- 
+
+  /* Contient l'image flottante dans son bloc */
+  .text-media {
+    display: flow-root;
+  }
+
+  /* Espacement entre plusieurs portraits (si data-limit > 1) */
+  .personne + .personne {
+    margin-top: 72px;
+  }
+
+  @media (max-width: 600px) {
+    .personne + .personne {
+      margin-top: 42px;
+    }
+  }
+
+  /* =========================================================
+     ARTICLES / PROJETS / ACTUALITÉS D'UNE PERSONNE (préfixe pt-)
+     ========================================================= */
+
+  .personne__travaux {
+    margin-top: 48px;
+    padding: 40px;
+    background: #f5f6fa;
+    border-top: 3px solid #2F2A85;
+  }
+
+  .pt-groupe + .pt-groupe {
+    margin-top: 48px;
+  }
+
+  /* --- En-tête de groupe : titre + filet --- */
+  .pt-groupe__entete {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 24px;
+  }
+
+  .pt-groupe__titre {
+    margin: 0;
+    color: #2F2A85;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .pt-groupe__trait {
+    flex: 1;
+    height: 1px;
+    background: #d5d8e6;
+  }
+
+  .pt-grille {
+    display: grid;
+    gap: 28px;
+  }
+
+  .pt-meta {
+    display: block;
+    color: #666;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+
+  .pt-meta--clair {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* --- Articles : couvertures verticales --- */
+  .pt-grille--publications {
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  }
+
+  .pt-article__lien {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .pt-article__image {
+  width: 100%;
+  height: 272px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  background: #e3e5ee;
+  box-shadow: 0 6px 18px rgba(47, 42, 133, 0.12);
+}
+
+.pt-article__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+  .pt-article__titre {
+    margin: 6px 0 0;
+    color: #2F2A85;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.2s ease;
+  }
+
+  .pt-article__lien:hover .pt-article__titre {
+    color: #06ADD5;
+  }
+
+  /* --- Projets : cartes horizontales --- */
+  .pt-grille--projets {
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  }
+
+  .pt-projet__lien {
+    display: grid;
+    grid-template-columns: 42% 1fr;
+    height: 100%;
+    background: #fff;
+    color: inherit;
+    text-decoration: none;
+    border-left: 4px solid #06ADD5;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.25s ease;
+  }
+
+  .pt-projet__image {
+    min-height: 200px;
+    overflow: hidden;
+    background: #e3e5ee;
+  }
+
+  .pt-projet__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+
+  .pt-projet__corps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px 24px;
+  }
+
+  .pt-projet__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .pt-tag {
+    padding: 3px 9px;
+    background: #eaf8fc;
+    color: #0086a8;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .pt-projet__titre {
+    margin: 0;
+    color: #111;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .pt-projet__desc {
+    margin: 0;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .pt-projet__plus {
+    align-self: flex-start;   /* soulignement limité à la largeur du texte */
+    margin-top: auto;
+    color: #2F2A85;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    /* même effet de survol que le titre des évènements de l'agenda */
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.25s ease;
+  }
+
+
+  .pt-projet__lien:hover {
+    box-shadow: 0 10px 26px rgba(47, 42, 133, 0.16);
+  }
+
+  .pt-projet__lien:hover .pt-projet__image img {
+    transform: scale(1.04);
+  }
+  .pt-projet__lien:hover .pt-projet__plus,
+  .pt-projet__lien:focus-visible .pt-projet__plus {
+    background-size: 100% 1px;
+  }
+
+
+  /* --- Actualités : vignettes image + dégradé --- */
+  .pt-grille--actualites {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  .pt-actu {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #282d30;
+    isolation: isolate;
+  }
+
+  .pt-actu__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    transition: transform 0.35s ease;
+  }
+
+  .pt-actu::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.05) 100%);
+  }
+
+  .pt-actu__contenu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 20px 18px;
+  }
+
+  .pt-actu__titre {
+    margin: 6px 0 0;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.28;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .pt-actu__lien {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .pt-actu:hover .pt-actu__image,
+  .pt-actu:focus-within .pt-actu__image {
+    transform: scale(1.04);
+  }
+
+  /* Focus clavier visible sur toutes les cartes */
+  .pt-article__lien:focus-visible,
+  .pt-projet__lien:focus-visible,
+  .pt-actu__lien:focus-visible {
+    outline: 3px solid #06ADD5;
+    outline-offset: 3px;
+  }
+
+  /* --- Responsive --- */
+  @media (max-width: 900px) {
+    .personne__travaux {
+      padding: 32px 24px;
+    }
+
+    .pt-grille--projets {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .personne__travaux {
+      margin: 32px -18px 0;   /* pleine largeur sur mobile */
+      padding: 28px 18px;
+    }
+
+    .pt-groupe + .pt-groupe {
+      margin-top: 36px;
+    }
+
+    .pt-grille {
+      gap: 20px;
+    }
+
+    .pt-grille--publications {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px 14px;
+    }
+
+    .pt-article__titre {
+      font-size: 14px;
+    }
+
+    .pt-grille--actualites {
+      grid-template-columns: 1fr;
+    }
+
+    .pt-projet__lien {
+      grid-template-columns: 1fr;
+    }
+
+    .pt-projet__image {
+      min-height: 0;
+      aspect-ratio: 16 / 9;
+    }
+
+    .pt-projet__corps {
+      padding: 18px;
+    }
+
+    .pt-projet__titre {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .personne__travaux {
+      margin-left: -15px;
+      margin-right: -15px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pt-article__image,
+    .pt-projet__image img,
+    .pt-projet__plus,
+    .pt-actu__image {
+      transition: none !important;
+    }
+  }
+
   /* évite qu'un sous-titre reste isolé en bas de colonne */
   .text-media h3 {
     break-after: avoid;
@@ -2756,129 +3269,11 @@ Farah Sayem (1996) est curatrice et opératrice culturelle basée à Tunis. Elle
              MENU PRINCIPAL
         ================================== -->
 
-        <div class="footer-content">
-
-            <!-- About us -->
-            <div class="footer-column">
-
-                <h3>À propos</h3>
-
-                <ul>
-                    <li><a href="#">La Chaire</a></li>
-                    <li><a href="#">Membres & partenaires</a></li>
-                    <li><a href="#">Méthode</a></li>
-                    <li><a href="#">Gouvernance</a></li>
-                </ul>
-
-            </div>
-
-
-            <!-- Knowledge -->
-            <div class="footer-column">
-
-                <h3>Projets</h3>
-
-                <ul>
-                    <li><a href="#">Thèse</a></li>
-                    <li><a href="#">Plateforme des ODD</a></li>
-                    <li><a href="#">Béni Khalled</a></li>
-                    <li><a href="#">Médina de Tunis</a></li>
-                    <li><a href="#">Îles Kerkennah</a></li>
-
-
-                </ul>
-
-            </div>
-
-
-            <!-- Get involved -->
-            <div class="footer-column">
-
-                <h3>Évènements</h3>
-
-                <ul>
-                    <li><a href="#">Enquêtes de terrain</a></li>
-                    <li><a href="#">Ateliers et stages</a></li>
-                    <li><a href="#">Séminaires et conférences</a></li>
-                </ul>
-
-            </div>
-
-
-            <!-- Governance -->
-            <div class="footer-column governance">
-
-                <h3>Publications</h3>
-
-                <ul>
-                    <li><a href="#">Ouvrages et articles scientifiques</a></li>
-                    <li><a href="#">Revue de presse</a></li>
-                </ul>
-
-            </div>
-
-
-            <!-- Media -->
-            <div class="footer-column media-column">
-
-<!--
-                <h3>Media centre</h3>
-
-                <ul>
-                    <li><a href="#">Media centre</a></li>
-                    <li><a href="#">News and Stories</a></li>
-                </ul>-->
-
-
-                <h3>Connect</h3>
-
-                    <div class="social-links">
-
-                        <a href="#" aria-label="LinkedIn">
-                            <img
-                                src="images/social/linkedin.png"
-                                alt="LinkedIn"
-                            >
-                        </a>
-
-                        <a href="#" aria-label="Instagram">
-                            <img
-                                src="images/social/instagram.png"
-                                alt="Instagram"
-                            >
-                        </a>
-
-
-                        <a href="#" aria-label="Facebook">
-                            <img
-                                src="images/social/facebook.png"
-                                alt="Facebook"
-                            >
-                        </a>
-                        <!--
-                        <a href="#" aria-label="YouTube">
-                            <img
-                                src="images/social/youtube.png"
-                                alt="YouTube"
-                            >
-                        </a>-->
-
-                        
-
-
-                    </div>
-
-
-
-                <!-- Connect -->
-                <div class="footer-connect">
-
-                    
-                </div>
-
-            </div>
-
-        </div>
+        <!-- Colonnes générées automatiquement depuis
+             data/structure/navigation.json : une colonne par catégorie
+             du menu principal, puis la colonne des réseaux sociaux
+             ("reseauxSociaux" : titre, icônes et liens). -->
+        <div class="footer-content" data-nav="footer"></div>
 
 
         <!-- =================================
@@ -3007,12 +3402,8 @@ Farah Sayem (1996) est curatrice et opératrice culturelle basée à Tunis. Elle
 .footer-content {
     display: grid;
 
-    grid-template-columns:
-        1fr
-        1.25fr
-        1.15fr
-        1.25fr
-        1fr;
+    /* nombre de colonnes fixé par js/contenus.js */
+    grid-template-columns: repeat(var(--nb-colonnes-footer, 5), minmax(0, 1fr));
 
     column-gap: 42px;
 
@@ -3070,6 +3461,14 @@ Farah Sayem (1996) est curatrice et opératrice culturelle basée à Tunis. Elle
 
 .footer-column a:hover {
     color: #00a9df;
+}
+
+/* Titre de colonne cliquable (lien vers la page de la catégorie) */
+.footer-column h3 a {
+    color: #fff;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
 }
 
 
@@ -3350,6 +3749,8 @@ Farah Sayem (1996) est curatrice et opératrice culturelle basée à Tunis. Elle
 
 
 
+
+<script src="js/contenus.js" defer></script>
 
 </body>
 </html>
