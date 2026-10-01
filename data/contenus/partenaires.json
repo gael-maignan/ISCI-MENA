@@ -47,6 +47,13 @@
       "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/d/8/csm_LabUrba-LOGO-V2_dc5b863c24.png",
       "lien": "https://laburba.univ-gustave-eiffel.fr/",
       "nouvelOnglet": true
+    },
+    {
+      "id": "erudite",
+      "nom": "Laboratoire Érudite",
+      "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/5/6/csm_Erudite-LOGO-V2_5a686af4b6.png",
+      "lien": "https://erudite-upec.univ-gustave-eiffel.fr/",
+      "nouvelOnglet": true
     }
   ],
   "universites-ecoles-partenaires": [
