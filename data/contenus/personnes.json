@@ -1,8 +1,35 @@
 [
+  {
+    "id": "rania-hedeya",
+    "nom": "Rania Hedeya",
+    "projets": ["beni-khalled", "iles-kerkennah"],
+    "image" : "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/c/9/csm_Rania-HEDEYA-N_B_fd4df8e169.png",
+    "lien" : "amina",
+    "bio": [
+      "Rania HEDEYA est cheffe de bureau ONU-Habitat pour la région MENA (ou ROAS pour Regional Office for Arab States) avec 28 ans d'expérience dans le domaine du développement.",
+      "Elle a débuté sa carrière au Programme des Nations unies pour le développement (PNUD), où elle a acquis des connaissances et une expertise approfondies dans les domaines de la décentralisation et du développement local, avec un accent particulier sur le développement économique local, et avant cela, dans la planification stratégique, le suivi et l'évaluation.",
+      "Directrice du Développement et des Relations Internationales à l’EIVP, Vice-Présidente International déléguée à la région MENA à l’Université, elle est également co-responsable du Master Gestion des Entreprises Sociales et Solidaires.",
+      "En 2013, elle a rejoint ONU-Habitat, où elle a enrichi son expérience dans le domaine du développement en se spécialisant dans le développement urbain durable.",
+      "Rania est également membre du conseil d'administration de plusieurs organismes liés à l'urbanisme, où elle veille à l'alignement des initiatives urbaines en Égypte sur les principes internationaux et les dialogues sur l'urbanisation durable. "    ]
+  },
+  {
+    "id": "aida-robbana",
+    "nom": "Aida Robbana",
+    "projets": ["beni-khalled", "iles-kerkennah"],
+    "image" : "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/0/5/csm_Aida-ROBBANA-N_B_c952cf90f3.png",
+    "lien" : "amina",
+    "bio": [
+      "Aida ROBBANA est cheffe de bureau ONU-Habitat Tunisie et coordinatrice de la chaire ISCI-MENA depuis 2024.",
+      "Gestionnaire de programme, elle exerce dans le domaine du développement durable depuis 25 ans, expérience qu’elle a notamment aiguisé au PNUD et à la DIRASSET.",
+      "Titulaire d’un doctorat en économie obtenu à l’Université Paris IX Dauphine, elle est spécialiste en stratégie, en planification, en suivi, d’évaluation et en relations publiques."    ]
+  },
+
+
+
    {
     "id": "amina-beji-becheur",
     "nom": "Amina Béji-Bécheur",
-    "projets": ["beni-khalled", "iles-kerkennah"],
+    "projets": ["beni-khalled", "iles-kerkennah", "plateforme-des-odd"],
     "image" : "https://irg-upec.univ-gustave-eiffel.fr/typo3temp/assets/_processed_/d/3/csm_photo_amina_2021_41746b3669.jpg",
     "lien" : "amina",
     "bio": [
@@ -14,6 +41,32 @@
   },
   {
     "id": "farah-sayem",
+    "projets": ["beni-khalled", "iles-kerkennah"],
+    "nom": "Farah SAYEM",
+    "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/3/8/csm_Farah-SAYEM-N_B_9569f67da9.png",
+    "lien" : "#",
+    "imageAlt": "Portrait de Farah Sayem",
+    "bio": [
+      "Farah Sayem (1996) est curatrice et opératrice culturelle basée à Tunis. Elle s’intéresse aux dimensions physiques et politiques des espaces urbains, publics et communs, en interrogeant leur lien avec les pratiques sociales et culturelles de leurs habitant·e·s.",
+      "Son travail examine le rôle de ces espaces dans la transformation des paysages urbains. Elle explore également les notions d’autogestion, de communs urbains artistiques et les enjeux politiques de ces structures comme formes de résistance face aux conséquences sociales du néolibéralisme.",
+      "Depuis avril 2020, elle est activement engagée dans la société civile, développant des projets culturels qui promeuvent la démocratisation de l'activité artistique. Son parcours professionnel est axé sur la curation et la gestion de projets. Elle a collaboré avec L’Art Rue sur le festival Dream City, le Collectif Créatif, les Journées Musicales de Carthage, La Boîte : lieu d’architecture et d’art contemporain, Gabes Cinéma Fen, ONU Femmes Tunisie, ainsi que El Warcha collaborative design studio Tunis.",
+      "Farah est titulaire d’un master en design produit (ESSTED) et d’un second master en management social et solidaire (ISG Tunis). Elle a également été membre du collectif TASAWAR CURATORIAL STUDIOS 3."    ]
+  },
+  {
+    "id": "farah-sayem2",
+    "projets": ["beni-khalled", "iles-kerkennah"],
+    "nom": "Farah SAYEM",
+    "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/3/8/csm_Farah-SAYEM-N_B_9569f67da9.png",
+    "lien" : "#",
+    "imageAlt": "Portrait de Farah Sayem",
+    "bio": [
+      "Farah Sayem (1996) est curatrice et opératrice culturelle basée à Tunis. Elle s’intéresse aux dimensions physiques et politiques des espaces urbains, publics et communs, en interrogeant leur lien avec les pratiques sociales et culturelles de leurs habitant·e·s.",
+      "Son travail examine le rôle de ces espaces dans la transformation des paysages urbains. Elle explore également les notions d’autogestion, de communs urbains artistiques et les enjeux politiques de ces structures comme formes de résistance face aux conséquences sociales du néolibéralisme.",
+      "Depuis avril 2020, elle est activement engagée dans la société civile, développant des projets culturels qui promeuvent la démocratisation de l'activité artistique. Son parcours professionnel est axé sur la curation et la gestion de projets. Elle a collaboré avec L’Art Rue sur le festival Dream City, le Collectif Créatif, les Journées Musicales de Carthage, La Boîte : lieu d’architecture et d’art contemporain, Gabes Cinéma Fen, ONU Femmes Tunisie, ainsi que El Warcha collaborative design studio Tunis.",
+      "Farah est titulaire d’un master en design produit (ESSTED) et d’un second master en management social et solidaire (ISG Tunis). Elle a également été membre du collectif TASAWAR CURATORIAL STUDIOS 3."    ]
+  },
+  {
+    "id": "farah-sayem3",
     "projets": ["beni-khalled", "iles-kerkennah"],
     "nom": "Farah SAYEM",
     "image": "https://isci-mena.univ-gustave-eiffel.fr/fileadmin/_processed_/3/8/csm_Farah-SAYEM-N_B_9569f67da9.png",

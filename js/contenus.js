@@ -56,13 +56,80 @@
    PROJET (fiche détaillée d'un projet) :
      data-projet="id-du-projet"  conteneur de la section Projet.
        Affiche : pays, titre, image, description du projet ;
-       un volet listant tous les projets par pays (liens vers
-       leurs pages, projet courant mis en évidence) ;
+       un volet de navigation à droite (voir VOLET ci-dessous,
+       menu "projets" par défaut, projet courant mis en évidence) ;
        les publications dont "projets" contient cet id ;
        les personnes dont "projets" contient cet id (avec photo ;
        carte cliquable si la personne a un "lien") ;
        les partenaires listés dans le champ "partenaires" du
-       projet (ids de data/contenus/partenaires.json).
+       projet (ids de data/contenus/partenaires.json) ;
+       les dernières actualités dont "projets" contient cet id.
+       data-limit-actualites  (optionnel) nb d'actualités affichées,
+                          puis « Afficher plus » par lots de ce nombre (déf. 4)
+       data-limit-equipe  (optionnel) nb de personnes affichées
+                          avant « Afficher plus » sur grand écran (déf. 5)
+       data-limit-equipe-mobile  (optionnel) idem sur petit écran,
+                          ≤ 600 px, grille de 2 colonnes (déf. 6)
+       data-volet         (optionnel) autre menu pour le volet
+       data-volet-titre   (optionnel) titre du volet
+                          (déf. « Tous les projets »)
+
+   PERSONNE (portrait détaillé, même principe que PROJET) :
+     data-personne="id-de-la-personne"  conteneur d'une section.
+       Plusieurs ids possibles, séparés par des virgules
+       (ex. "rania-hedeya, aida-robbana") : portraits à la suite.
+       Affiche : nom, photo, biographie ; puis ses publications,
+       projets et dernières actualités (voir GROUPES_PERSONNE) ;
+       un volet de navigation à droite (menu "a-propos" par défaut).
+       data-volet         (optionnel) autre menu pour le volet,
+                          ou "aucun" pour ne pas en afficher
+       data-volet-actif   (optionnel) élément du menu mis en évidence
+       data-volet-titre   (optionnel) titre du volet
+
+   PARTENAIRES (tous les partenaires, groupés par catégorie) :
+     data-partenaires  conteneur de la section. Les catégories et leur
+                       ordre viennent de "categories" dans
+                       data/contenus/partenaires.json.
+       data-partenaires="id1, id2"  (optionnel) n'afficher que ces
+                       catégories (ids de partenaires.json)
+       data-titre      (optionnel) titre (déf. « Nos partenaires »)
+       data-volet      (optionnel) menu du volet (déf. "membres-partenaires",
+                       donc menu « À propos » avec cet élément en
+                       évidence) ; "aucun" pour ne pas en afficher
+       data-volet-actif, data-volet-titre : comme pour VOLET.
+
+   CATÉGORIE (liste des contenus d'une catégorie + volet) :
+     data-categorie="id"  id d'une entrée de navigation.json :
+       - élément de sous-menu (ex. "ouvrages-et-articles-scientifiques")
+         -> contenus dont "categorie" vaut cet id ; volet = menu de
+            sa catégorie parente ("Publications"), élément en évidence ;
+       - catégorie du menu (ex. "publications")
+         -> contenus de la catégorie ET de tous ses sous-menus.
+       Les 4 plus récents, puis « Afficher plus » par lots de 4.
+       data-limit    (optionnel) taille des lots (déf. 4)
+       data-sources  (optionnel) fichiers parcourus, séparés par des
+                     virgules (déf. "actualites, publications")
+       data-titre    (optionnel) titre affiché (déf. titre de navigation.json)
+       data-volet, data-volet-actif, data-volet-titre : comme ci-dessous,
+                     data-volet="aucun" pour ne pas afficher de volet.
+
+   VOLET (menu latéral de navigation, à droite du contenu) :
+     data-volet="id"  sur n'importe quel conteneur : son contenu
+                      passe dans une colonne principale et un volet
+                      est ajouté à droite (dessous sur mobile).
+       "id" = id d'une catégorie de navigation.json (ex. "a-propos")
+              -> le volet liste son sous-menu (ou son sous-menu
+                 automatique, ex. "projets" groupés par pays) ;
+              ou id d'un élément de sous-menu (ex. "la-chaire")
+              -> volet de sa catégorie, cet élément mis en évidence.
+       data-volet-actif  (optionnel) id de l'élément à mettre en
+                         évidence. Sans lui, c'est le lien qui pointe
+                         vers la page courante.
+       data-volet-titre  (optionnel) titre (déf. titre de la catégorie)
+     Le volet est généré par la même fonction que le méga-menu
+     (colonnesCategorie) : un seul système, aucune liste à recopier.
+     Projets, personnes, catégories et volets génériques partagent ce code ; chaque volet
+     reçoit un identifiant unique (plusieurs volets par page possibles).
 
    NOUVEL ONGLET : dans n'importe quel JSON, un élément qui a un
    "lien" peut ajouter  "nouvelOnglet": true  pour que ce lien
@@ -239,33 +306,6 @@
           </a>
         </article>`;
     },
-
-    // --- Portraits de personnes (bloc text-media) ---
-    // Titre = nom, image flottante à gauche, "bio" = liste de paragraphes.
-    // Sous la bio : articles, projets et dernières actualités liés à la
-    // personne, chacun dans sa propre grille (voir GROUPES_PERSONNE).
-    personnes(item, index, liens = {}) {
-      const idTitre = `personne-${esc(item.id)}-titre`;
-      const paragraphes = (Array.isArray(item.bio) ? item.bio : [item.bio])
-        .filter(Boolean)
-        .map((p) => `<p>${esc(p)}</p>`)
-        .join("");
-      const image = item.image
-        ? `<img class="text-media__image" src="${url(item.image)}" alt="${esc(item.imageAlt || item.nom)}" loading="lazy">`
-        : "";
-      return `
-        <article class="personne" aria-labelledby="${idTitre}">
-          <header class="site-section__header">
-            <h2 id="${idTitre}" class="site-section__title">${esc(item.nom)}</h2>
-            <span class="site-section__line"></span>
-          </header>
-          <div class="text-media">
-            ${image}
-            ${paragraphes}
-          </div>
-          ${grilleTravaux(liens[item.id])}
-        </article>`;
-    },
   };
 
   /* ---------------------------------------------------------
@@ -277,13 +317,15 @@
        - sinon : l'élément liste les personnes dans "personnes".
      Tri du plus récent au plus ancien (sans date : ordre conservé).
      "limite" (optionnel) plafonne le nombre de cartes affichées.
+     "initial" + "lot" (optionnel) : "initial" cartes visibles, puis
+     « Afficher plus » en révèle "lot" de plus à chaque clic.
      Un groupe vide n'est pas affiché.
      --------------------------------------------------------- */
 
   const GROUPES_PERSONNE = [
     { source: "publications", titre: "Publications",             carte: carteArticle },
     { source: "projets",      titre: "Projets",              carte: carteProjet, champPersonne: "projets" },
-    { source: "actualites",   titre: "Dernières actualités", carte: carteActualite, limite: 3 },
+    { source: "actualites",   titre: "Dernières actualités", carte: carteActualite, initial: 4, lot: 6 },
   ];
 
 
@@ -351,13 +393,40 @@
               <h3 class="pt-groupe__titre">${esc(g.titre)}</h3>
               <span class="pt-groupe__trait"></span>
             </header>
-            <div class="pt-grille pt-grille--${esc(g.source)}">
+            <div class="pt-grille pt-grille--${esc(g.source)}"${g.lot ? ` data-pagine-pas="${g.lot}" data-pagine-initial="${g.initial || g.lot}"` : ""}>
               ${items.map(g.carte).join("")}
             </div>
           </section>`;
       })
       .join("");
     return blocs ? `<div class="personne__travaux">${blocs}</div>` : "";
+  }
+
+  // --- Portrait d'une personne (bloc text-media) ---
+  // Titre = nom, image flottante à gauche, "bio" = liste de paragraphes.
+  // Sous la bio : articles, projets et dernières actualités liés à la
+  // personne, chacun dans sa propre grille (voir GROUPES_PERSONNE).
+  function htmlPortrait(item, liens = {}) {
+    const idTitre = `personne-${esc(item.id)}-titre`;
+    const paragraphes = (Array.isArray(item.bio) ? item.bio : [item.bio])
+      .filter(Boolean)
+      .map((p) => `<p>${esc(p)}</p>`)
+      .join("");
+    const image = item.image
+      ? `<img class="text-media__image" src="${url(item.image)}" alt="${esc(item.imageAlt || item.nom)}" loading="lazy">`
+      : "";
+    return `
+      <article class="personne" aria-labelledby="${idTitre}">
+        <header class="site-section__header">
+          <h2 id="${idTitre}" class="site-section__title">${esc(item.nom)}</h2>
+          <span class="site-section__line"></span>
+        </header>
+        <div class="text-media">
+          ${image}
+          ${paragraphes}
+        </div>
+        ${grilleTravaux(liens[item.id])}
+      </article>`;
   }
 
   // Construit { idPersonne: { source: [éléments triés] } }
@@ -856,7 +925,7 @@
         <button type="button" role="tab" class="agenda__onglet"
                 id="agenda-onglet-${p.cle}" aria-controls="agenda-panneau-${p.cle}"
                 aria-selected="${p.cle === actif}" tabindex="${p.cle === actif ? 0 : -1}">
-          ${p.titre}<span class="agenda__nb">${p.liste.length}</span>
+          ${p.titre}
         </button>`).join("");
 
       const contenus = panneaux.map((p) => {
@@ -922,6 +991,135 @@
   }
 
   /* ---------------------------------------------------------
+     « Afficher plus » générique : les "pas" premiers enfants du
+     conteneur sont visibles, chaque clic en révèle "pas" de plus.
+     Utilisé par les actualités d'un projet et les catégories.
+     --------------------------------------------------------- */
+
+  // "initial" (optionnel) : nombre visible au départ, s'il diffère du lot
+  function paginer(conteneur, pas = 5, libelle = "Afficher plus", initial = pas) {
+    const items = [...conteneur.children];
+    conteneur.setAttribute("data-pagine", "");
+    if (items.length <= initial) return;
+    items.forEach((el, i) => { el.hidden = i >= initial; });
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "bouton-plus";
+    const majLibelle = () => {
+      const reste = conteneur.querySelectorAll(":scope > [hidden]").length;
+      btn.innerHTML = `${esc(libelle)} <span class="bouton-plus__nb">(${reste})</span>`;
+      return reste;
+    };
+    majLibelle();
+
+    btn.addEventListener("click", () => {
+      const caches = [...conteneur.querySelectorAll(":scope > [hidden]")];
+      caches.slice(0, pas).forEach((el) => { el.hidden = false; });
+      const premier = caches[0] && caches[0].querySelector("a");
+      if (premier) premier.focus({ preventScroll: true });
+      if (!majLibelle()) btn.remove();
+    });
+    conteneur.after(btn);
+  }
+
+  // Branche la pagination sur tous les conteneurs [data-pagine-pas] d'une zone
+  function brancherPagination(zone) {
+    zone.querySelectorAll("[data-pagine-pas]").forEach((c) => {
+      const pas = parseInt(c.dataset.paginePas, 10) || 5;
+      paginer(c, pas, "Afficher plus", parseInt(c.dataset.pagineInitial, 10) || pas);
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Volet de navigation (data-volet="id-navigation")
+     ---------------------------------------------------------
+     Construit à partir de navigation.json avec colonnesCategorie,
+     la même fonction que le méga-menu et le footer : un sous-menu
+     modifié dans navigation.json (ou un projet ajouté dans
+     projets.json) apparaît partout à la fois.
+     --------------------------------------------------------- */
+
+  let compteurVolets = 0;   // identifiants uniques (plusieurs volets par page)
+
+  // id de catégorie -> { cat, actif: null }
+  // id d'élément de sous-menu -> { cat: sa catégorie, actif: cet id }
+  async function resoudreNavigation(idNav) {
+    const nav = await charger("structure/navigation");
+    const menu = (nav.menu || []).filter(publie);
+    const cat = menu.find((c) => c.id === idNav);
+    if (cat) return { cat, actif: null };
+    const parent = menu.find((c) => (c.sousMenu || []).some((s) => s.id === idNav));
+    return parent ? { cat: parent, actif: idNav } : null;
+  }
+
+  // Le lien pointe-t-il vers la page affichée ? (ancres "#..." ignorées)
+  function estPageCourante(lien) {
+    if (!lien || lien.startsWith("#")) return false;
+    try {
+      const u = new URL(lien, location.href);
+      return u.origin === location.origin && u.pathname === location.pathname;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // HTML du volet ("" si l'id est inconnu ou le sous-menu vide)
+  async function htmlVolet(idNav, options = {}) {
+    const res = await resoudreNavigation(idNav);
+    if (!res) {
+      console.warn(`[contenus] Volet : "${idNav}" introuvable dans data/structure/navigation.json`);
+      return "";
+    }
+    const { cat } = res;
+    const actif = options.actif || res.actif;
+    const colonnes = (await colonnesCategorie(cat))
+      .map((c) => ({ ...c, liens: c.liens.filter(publie) }))
+      .filter((c) => c.liens.length);
+    if (!colonnes.length) return "";
+
+    const estActif = (l) => (actif ? l.id === actif : estPageCourante(l.lien));
+    const idTitre = `volet-${++compteurVolets}-titre`;
+    const titre = options.titre || cat.titre;
+    const titreHTML = cat.lien && cat.lien !== "#"
+      ? `<a href="${esc(cat.lien)}"${cible(cat)}>${esc(titre)}</a>`
+      : esc(titre);
+
+    return `
+        <nav class="volet" aria-labelledby="${idTitre}">
+          <h3 id="${idTitre}" class="volet__titre">${titreHTML}</h3>
+          ${colonnes.map((col) => `
+          <div class="volet__groupe">
+            ${col.titre ? `<h4 class="volet__sous-titre">${esc(col.titre)}</h4>` : ""}
+            <ul>
+              ${col.liens.map((l) => estActif(l)
+                ? `<li><span class="volet__lien is-actif" aria-current="page">${esc(l.titre)}</span></li>`
+                : `<li><a class="volet__lien" href="${esc(l.lien || "#")}"${cible(l)}>${esc(l.titre)}</a></li>`).join("")}
+            </ul>
+          </div>`).join("")}
+        </nav>`;
+  }
+
+  // Conteneur générique : contenu existant -> colonne principale, volet à droite
+  async function construireVolet(zone) {
+    try {
+      const volet = await htmlVolet(zone.dataset.volet, {
+        actif: zone.dataset.voletActif,
+        titre: zone.dataset.voletTitre,
+      });
+      if (!volet) return;
+      const principal = document.createElement("div");
+      principal.className = "volet-principal";
+      while (zone.firstChild) principal.appendChild(zone.firstChild);
+      zone.classList.add("volet-grille");
+      zone.appendChild(principal);
+      zone.insertAdjacentHTML("beforeend", volet);
+    } catch (err) {
+      console.error(`[contenus] Volet "${zone.dataset.volet}" :`, err);
+    }
+  }
+
+  /* ---------------------------------------------------------
      Fiche projet (data-projet="id")
      ---------------------------------------------------------
      projets.json      titre, pays, image, description (liste de
@@ -967,9 +1165,15 @@
           </section>`;
   }
 
-  function htmlEquipe(personnes) {
+  // Équipe : seules les premières personnes sont visibles, les suivantes
+  // sont révélées par « Afficher plus ». Le nombre dépend de la largeur
+  // d'écran : 5 sur grand écran, 6 sur téléphone (grille de 2 colonnes,
+  // donc 3 lignes complètes). Recalculé si l'écran change de taille.
+  const ECRAN_MOBILE = window.matchMedia("(max-width: 600px)");
+
+  function htmlEquipe(personnes, limites) {
     if (!personnes.length) return "";
-    return `<ul class="projet__equipe">${personnes.map((p) => {
+    return `<ul class="projet__equipe" data-limite="${limites.grand}" data-limite-mobile="${limites.mobile}">${personnes.map((p) => {
       const photo = p.image
         ? `<img class="projet__photo" src="${url(p.image)}" alt="" loading="lazy">`
         : `<span class="projet__photo projet__photo--initiales" aria-hidden="true">${esc(initiales(p.nom))}</span>`;
@@ -977,13 +1181,56 @@
       const contenu = `${photo}${nom}${p.fonction ? `<span class="projet__fonction">${esc(p.fonction)}</span>` : ""}`;
       // Carte cliquable dès que la personne a un "lien" (page de profil)
       return `<li>${p.lien
-        ? `<a class="projet__personne" href="${esc(p.lien)}"${cible(p)}>${contenu}<span class="projet__profil">Voir le profil</span></a>`
+        ? `<a class="projet__personne" href="${esc(p.lien)}"${cible(p)}>${contenu}</a>`
         : `<div class="projet__personne">${contenu}</div>`}</li>`;
-    }).join("")}</ul>`;
+    }).join("")}</ul>${personnes.length > Math.min(limites.grand, limites.mobile)
+      ? `<button type="button" class="projet__plus">Afficher plus <span class="projet__plus-nb"></span></button>`
+      : ""}`;
   }
 
-  function htmlPartenaires(partenaires) {
+  // Masque les personnes au-delà de "nb" et met à jour le bouton
+  function appliquerLimiteEquipe(liste, nb) {
+    const items = [...liste.children];
+    items.forEach((li, i) => { li.hidden = i >= nb; });
+    liste.dataset.affiches = nb;
+    const btn = liste.nextElementSibling;
+    if (!btn || !btn.classList.contains("projet__plus")) return;
+    const reste = items.length - nb;
+    btn.hidden = reste <= 0;
+    btn.querySelector(".projet__plus-nb").textContent = `(${reste})`;
+  }
+
+  const limiteEquipe = (liste) =>
+    parseInt(ECRAN_MOBILE.matches ? liste.dataset.limiteMobile : liste.dataset.limite, 10) || 5;
+
+  function brancherAfficherPlus(zone) {
+    zone.querySelectorAll(".projet__equipe").forEach((liste) => {
+      appliquerLimiteEquipe(liste, limiteEquipe(liste));
+
+      const btn = liste.nextElementSibling;
+      if (btn && btn.classList.contains("projet__plus")) {
+        btn.addEventListener("click", () => {
+          const avant = parseInt(liste.dataset.affiches, 10) || 0;
+          liste.dataset.deplie = "1";
+          appliquerLimiteEquipe(liste, avant + limiteEquipe(liste));
+          const premier = liste.children[avant] && liste.children[avant].querySelector("a");
+          if (premier) premier.focus({ preventScroll: true });
+        });
+      }
+
+      // Passage grand écran <-> téléphone : tant que le visiteur n'a pas
+      // cliqué sur « Afficher plus », on applique la limite du nouvel écran.
+      ECRAN_MOBILE.addEventListener("change", () => {
+        if (!liste.dataset.deplie) appliquerLimiteEquipe(liste, limiteEquipe(liste));
+      });
+    });
+  }
+
+  // options.categorie = false : n'affiche pas la catégorie sous le nom
+  // (inutile quand les partenaires sont déjà groupés par catégorie)
+  function htmlPartenaires(partenaires, options = {}) {
     if (!partenaires.length) return "";
+    const avecCategorie = options.categorie !== false;
     return `<ul class="projet__partenaires">${partenaires.map((p) => {
       const visuel = p.image
         ? `<img src="${url(p.image)}" alt="${esc(p.nom)}" loading="lazy">`
@@ -991,35 +1238,17 @@
       const contenu = `
               <span class="projet__logo">${visuel}</span>
               <span class="projet__partenaire-nom">${esc(p.nom)}</span>
-              ${p.categorieTitre ? `<span class="projet__partenaire-cat">${esc(p.categorieTitre)}</span>` : ""}`;
+              ${avecCategorie && p.categorieTitre ? `<span class="projet__partenaire-cat">${esc(p.categorieTitre)}</span>` : ""}`;
       return `<li>${p.lien
         ? `<a class="projet__partenaire" href="${esc(p.lien)}"${cible(p)}>${contenu}</a>`
         : `<div class="projet__partenaire">${contenu}</div>`}</li>`;
     }).join("")}</ul>`;
   }
 
-  function htmlVoletProjets(projets, idCourant) {
-    const groupes = grouperParPays(projets);
-    const idTitre = `projet-${esc(idCourant)}-volet-titre`;
-    return `
-        <aside class="projet__volet" aria-labelledby="${idTitre}">
-          <h3 id="${idTitre}" class="projet__volet-titre">Tous les projets</h3>
-          ${groupes.map((g) => `
-          <div class="projet__volet-groupe">
-            <h4 class="projet__volet-pays">${esc(g.titre)}</h4>
-            <ul>
-              ${g.liens.map((pr) => pr.id === idCourant
-                ? `<li><span class="projet__volet-lien is-actif" aria-current="page">${esc(pr.titre)}</span></li>`
-                : `<li><a class="projet__volet-lien" href="${esc(pr.lien || "#")}"${cible(pr)}>${esc(pr.titre)}</a></li>`).join("")}
-            </ul>
-          </div>`).join("")}
-        </aside>`;
-  }
-
   async function construireProjet(zone) {
     const id = zone.dataset.projet;
     try {
-      const [projets, publications, personnes, partenaires] = await Promise.all([
+      const [projets, publications, personnes, partenaires, actualites] = await Promise.all([
         charger("projets"),
         charger("publications").catch(() => []),
         charger("personnes").catch(() => []),
@@ -1027,6 +1256,7 @@
           console.warn("[contenus] Projet : data/contenus/partenaires.json illisible :", err);
           return {};
         }),
+        charger("actualites").catch(() => []),
         chargerCategories(),
       ]);
 
@@ -1040,6 +1270,8 @@
       const lie = (el) => Array.isArray(el.projets) && el.projets.includes(id);
       const pubs = trierParDate(publications.filter((el) => publie(el) && lie(el)));
       const equipe = personnes.filter((el) => publie(el) && lie(el));
+      const actus = trierParDate(actualites.filter((el) => publie(el) && lie(el)));
+      const limiteActus = parseInt(zone.dataset.limitActualites, 10) || 4;
 
       const indexPart = indexerPartenaires(partenaires);
       const parts = (Array.isArray(projet.partenaires) ? projet.partenaires : []).map((pid) => {
@@ -1050,26 +1282,202 @@
       const paragraphes = (Array.isArray(projet.description) ? projet.description : [projet.description])
         .filter(Boolean).map((t) => `<p>${esc(t)}</p>`).join("");
       const pays = (projet.pays || []).map((p) => `<span class="pt-tag">${esc(nomPays(p))}</span>`).join("");
+      const limitesEquipe = {
+        grand: parseInt(zone.dataset.limitEquipe, 10) || 5,
+        mobile: parseInt(zone.dataset.limitEquipeMobile, 10) || 6,
+      };
+
+      // Volet : même générateur que les volets data-volet (menu "projets")
+      const volet = await htmlVolet(zone.dataset.volet || "projets", {
+        actif: id,
+        titre: zone.dataset.voletTitre || "Tous les projets",
+      });
 
       zone.innerHTML = `
-      <div class="projet__grille">
-        <article class="projet__principal" aria-labelledby="projet-${esc(id)}-titre">
+      <div class="projet__grille volet-grille">
+        <article class="projet__principal volet-principal" aria-labelledby="projet-${esc(id)}-titre">
           <header class="projet__entete">
             ${pays ? `<div class="projet__tags">${pays}</div>` : ""}
             <h2 id="projet-${esc(id)}-titre" class="projet__titre">${esc(projet.titre)}</h2>
           </header>
           ${projet.image ? `<figure class="projet__image"><img src="${url(projet.image)}" alt="${esc(projet.imageAlt || projet.titre)}" loading="lazy"></figure>` : ""}
           ${paragraphes ? `<div class="projet__texte">${paragraphes}</div>` : ""}
+          ${htmlBlocProjet("L'équipe du projet", "equipe", htmlEquipe(equipe, limitesEquipe))}
           ${htmlBlocProjet("Publications scientifiques", "publications",
             pubs.length ? `<div class="pt-grille pt-grille--publications">${pubs.map(carteArticle).join("")}</div>` : "")}
-          ${htmlBlocProjet("L'équipe du projet", "equipe", htmlEquipe(equipe))}
+          ${htmlBlocProjet("Dernières actualités", "actualites",
+            actus.length ? `<div class="pt-grille pt-grille--actualites" data-pagine-pas="${limiteActus}">${actus.map(carteActualite).join("")}</div>` : "")}
           ${htmlBlocProjet("Partenaires", "partenaires", htmlPartenaires(parts))}
         </article>
-        ${htmlVoletProjets(tous, id)}
+        ${volet}
       </div>`;
       zone.setAttribute("aria-busy", "false");
+      brancherAfficherPlus(zone);
+      brancherPagination(zone);
     } catch (err) {
       console.error(`[contenus] Projet "${id}" : impossible de charger les données :`, err);
+    }
+  }
+
+  /* ---------------------------------------------------------
+     Portrait(s) de personne(s) (data-personne="id" ou "id1, id2")
+     --------------------------------------------------------- */
+
+  async function construirePersonne(zone) {
+    const ids = String(zone.dataset.personne || "").split(",").map((t) => t.trim()).filter(Boolean);
+    try {
+      const [personnes] = await Promise.all([charger("personnes"), chargerCategories()]);
+      const parId = new Map(personnes.filter(publie).map((p) => [p.id, p]));
+      const choisies = ids.map((id) => {
+        if (!parId.has(id)) console.error(`[contenus] Personne : "${id}" introuvable dans data/contenus/personnes.json`);
+        return parId.get(id);
+      }).filter(Boolean);
+      if (!choisies.length) return;
+
+      const liens = await chargerLiensPersonnes(choisies);
+      const portraits = choisies.map((p) => htmlPortrait(p, liens)).join("");
+
+      // Volet : même générateur que pour les projets (menu "a-propos" par défaut)
+      const idVolet = zone.dataset.volet === undefined ? "a-propos" : zone.dataset.volet;
+      const volet = idVolet && idVolet !== "aucun"
+        ? await htmlVolet(idVolet, { actif: zone.dataset.voletActif, titre: zone.dataset.voletTitre })
+        : "";
+
+      zone.innerHTML = volet
+        ? `<div class="volet-grille"><div class="volet-principal">${portraits}</div>${volet}</div>`
+        : portraits;
+      zone.setAttribute("aria-busy", "false");
+      brancherPagination(zone);
+    } catch (err) {
+      console.error(`[contenus] Personne "${ids.join(", ")}" : impossible de charger les données :`, err);
+    }
+  }
+
+  /* ---------------------------------------------------------
+     Section partenaires (data-partenaires)
+     Mêmes cartes que dans les fiches projet (htmlPartenaires),
+     un bloc par catégorie de partenaires.json.
+     --------------------------------------------------------- */
+
+  async function construirePartenaires(zone) {
+    const filtre = String(zone.dataset.partenaires || "").split(",").map((t) => t.trim()).filter(Boolean);
+    try {
+      const [donnees] = await Promise.all([charger("partenaires"), chargerCategories()]);
+      const categories = (Array.isArray(donnees.categories) ? donnees.categories : [])
+        .filter((c) => !filtre.length || filtre.includes(c.id));
+      filtre.filter((id) => !categories.some((c) => c.id === id)).forEach((id) => {
+        console.warn(`[contenus] Partenaires : catégorie "${id}" introuvable dans data/contenus/partenaires.json`);
+      });
+
+      const blocs = categories.map((c) => {
+        const membres = (Array.isArray(donnees[c.id]) ? donnees[c.id] : []).filter(publie);
+        return htmlBlocProjet(c.titre, `partenaires partenaires__groupe`, htmlPartenaires(membres, { categorie: false }));
+      }).join("");
+
+      const idTitre = `partenaires-${++compteurVolets}-titre`;
+      const contenu = `
+        <section class="partenaires" aria-labelledby="${idTitre}">
+          <h2 id="${idTitre}" class="projet__titre partenaires__titre">${esc(zone.dataset.titre || "Nos partenaires")}</h2>
+          ${blocs || `<p class="categorie__vide">Aucun partenaire pour le moment.</p>`}
+        </section>`;
+
+      const idVolet = zone.dataset.volet === undefined ? "membres-partenaires" : zone.dataset.volet;
+      const volet = idVolet && idVolet !== "aucun"
+        ? await htmlVolet(idVolet, { actif: zone.dataset.voletActif, titre: zone.dataset.voletTitre })
+        : "";
+
+      zone.innerHTML = volet
+        ? `<div class="volet-grille"><div class="volet-principal">${contenu}</div>${volet}</div>`
+        : contenu;
+      zone.setAttribute("aria-busy", "false");
+    } catch (err) {
+      console.error("[contenus] Partenaires : impossible de charger data/contenus/partenaires.json :", err);
+    }
+  }
+
+  /* ---------------------------------------------------------
+     Liste d'une catégorie (data-categorie="id-navigation")
+     --------------------------------------------------------- */
+
+  const SOURCES_CATEGORIE = ["actualites", "publications"];
+
+  // Carte horizontale : image, catégorie (ou type) · date, titre, extrait
+  function carteListe(item) {
+    const estPublication = item._source === "publications";
+    const meta = [estPublication ? item.type : titreCategorie(item.categorie), formaterDate(item.date)]
+      .filter(Boolean).join(" · ");
+    const desc = Array.isArray(item.description) ? item.description[0] : item.description;
+    return `
+      <article class="liste-cat__item liste-cat__item--${esc(item._source)}">
+        <a class="liste-cat__lien" href="${esc(item.lien || "#")}"${cible(item)}>
+          <div class="liste-cat__image">
+            ${item.image ? `<img src="${url(item.image)}" alt="${esc(item.imageAlt || item.titre)}" loading="lazy">` : ""}
+          </div>
+          <div class="liste-cat__corps">
+            ${meta ? `<span class="pt-meta">${esc(meta)}</span>` : ""}
+            <h3 class="liste-cat__titre">${esc(item.titre)}</h3>
+            ${item.auteurs ? `<p class="liste-cat__auteurs">${esc(item.auteurs)}</p>` : ""}
+            ${desc ? `<p class="liste-cat__desc">${esc(desc)}</p>` : ""}
+            <span class="pt-projet__plus">${estPublication ? "Lire la publication" : "Lire la suite"}</span>
+          </div>
+        </a>
+      </article>`;
+  }
+
+  async function construireCategorie(zone) {
+    const idCat = zone.dataset.categorie;
+    const sources = zone.dataset.sources
+      ? zone.dataset.sources.split(",").map((t) => t.trim()).filter(Boolean)
+      : SOURCES_CATEGORIE;
+    try {
+      const [nav, ...reste] = await Promise.all([
+        charger("structure/navigation"),
+        ...sources.map((src) => charger(src).catch((err) => {
+          console.warn(`[contenus] Catégorie : data/contenus/${src}.json ignoré :`, err);
+          return [];
+        })),
+        chargerCategories(),
+      ]);
+      const listes = reste.slice(0, sources.length);
+
+      // Catégorie du menu -> elle-même + ses sous-menus ; sous-menu -> lui seul
+      const menu = (nav.menu || []).filter(publie);
+      const catMenu = menu.find((c) => c.id === idCat);
+      const ids = new Set([idCat, ...(catMenu ? (catMenu.sousMenu || []).map((s) => s.id) : [])]);
+      if (!catMenu && !menu.some((c) => (c.sousMenu || []).some((s) => s.id === idCat))) {
+        console.warn(`[contenus] Catégorie : "${idCat}" introuvable dans data/structure/navigation.json`);
+      }
+
+      const elements = trierParDate(sources.flatMap((src, i) =>
+        (Array.isArray(listes[i]) ? listes[i] : [])
+          .filter((el) => publie(el) && ids.has(el.categorie))
+          .map((el) => ({ ...el, _source: src }))
+      ));
+
+      const pas = parseInt(zone.dataset.limit, 10) || 4;
+      const titre = zone.dataset.titre || titreCategorie(idCat) || idCat;
+      const idTitre = `categorie-${esc(idCat)}-titre`;
+
+      const idVolet = zone.dataset.volet === undefined ? idCat : zone.dataset.volet;
+      const volet = idVolet && idVolet !== "aucun"
+        ? await htmlVolet(idVolet, { actif: zone.dataset.voletActif, titre: zone.dataset.voletTitre })
+        : "";
+
+      const contenu = `
+        <section class="categorie" aria-labelledby="${idTitre}">
+          <h2 id="${idTitre}" class="projet__titre categorie__titre">${esc(titre)}</h2>
+          ${elements.length
+            ? `<div class="liste-cat" data-pagine-pas="${pas}">${elements.map(carteListe).join("")}</div>`
+            : `<p class="categorie__vide">Aucun contenu pour le moment.</p>`}
+        </section>`;
+
+      zone.innerHTML = volet
+        ? `<div class="volet-grille"><div class="volet-principal">${contenu}</div>${volet}</div>`
+        : contenu;
+      zone.setAttribute("aria-busy", "false");
+      brancherPagination(zone);
+    } catch (err) {
+      console.error(`[contenus] Catégorie "${idCat}" : impossible de charger les données :`, err);
     }
   }
 
@@ -1112,10 +1520,7 @@
         .sort((a, b) => String(b.date).localeCompare(String(a.date)))
         .slice(0, limite);
 
-      // Les portraits ont besoin des contenus liés (articles, projets, actualités)
-      const liens = source === "personnes" ? await chargerLiensPersonnes(donnees.filter(publie)) : undefined;
-
-      conteneur.innerHTML = items.map((item, i) => rendu(item, i, liens)).join("");
+      conteneur.innerHTML = items.map((item, i) => rendu(item, i)).join("");
       conteneur.setAttribute("aria-busy", "false");
       conteneur.dispatchEvent(new CustomEvent("contenus:charges", { detail: { source, items } }));
     } catch (err) {
@@ -1133,6 +1538,10 @@
     construireCarrousel();
     construireAgenda();
     document.querySelectorAll("[data-projet]").forEach(construireProjet);
+    document.querySelectorAll("[data-personne]").forEach(construirePersonne);
+    document.querySelectorAll("[data-categorie]").forEach(construireCategorie);
+    document.querySelectorAll("[data-partenaires]").forEach(construirePartenaires);
+    document.querySelectorAll("[data-volet]:not([data-projet]):not([data-personne]):not([data-categorie]):not([data-partenaires])").forEach(construireVolet);
   }
 
   if (document.readyState === "loading") {
