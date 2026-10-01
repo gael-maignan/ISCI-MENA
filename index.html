@@ -2790,14 +2790,17 @@ background:
 
 
 <!-- =======================================================
-     PARTENAIRES — tous les partenaires de data/contenus/
-     partenaires.json, groupés par catégorie, avec le volet
+     MEMBRES ET PARTENAIRES — les membres (pastilles rondes,
+     data/contenus/personnes.json) puis les partenaires groupés
+     par catégorie (data/contenus/partenaires.json), avec le volet
      « À propos » (« Membres & partenaires » en évidence).
+     data-membres="id1, id2" pour choisir les membres et leur ordre
+     (toutes les personnes par défaut, "aucun" pour masquer) ;
      data-partenaires="id1, id2" pour n'afficher que certaines
      catégories ; data-volet="aucun" pour retirer le volet.
      ======================================================= -->
 
-<section class="site-section partenaires-section" aria-label="Partenaires">
+<section class="site-section partenaires-section" aria-label="Membres et partenaires">
   <div class="site-section__container">
     <div data-partenaires aria-busy="true"></div>
   </div>

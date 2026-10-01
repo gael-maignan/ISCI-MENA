@@ -86,13 +86,23 @@
        data-volet-actif   (optionnel) élément du menu mis en évidence
        data-volet-titre   (optionnel) titre du volet
 
-   PARTENAIRES (tous les partenaires, groupés par catégorie) :
-     data-partenaires  conteneur de la section. Les catégories et leur
-                       ordre viennent de "categories" dans
-                       data/contenus/partenaires.json.
+   MEMBRES ET PARTENAIRES :
+     data-partenaires  conteneur de la section. Affiche d'abord les
+                       membres (pastilles rondes avec photo, comme
+                       l'équipe d'un projet, depuis personnes.json),
+                       puis les partenaires groupés par catégorie
+                       (ordre de "categories" dans partenaires.json).
        data-partenaires="id1, id2"  (optionnel) n'afficher que ces
-                       catégories (ids de partenaires.json)
-       data-titre      (optionnel) titre (déf. « Nos partenaires »)
+                       catégories de partenaires
+       data-membres    (optionnel) ids de personnes séparés par des
+                       virgules, dans l'ordre voulu (déf. toutes les
+                       personnes de personnes.json) ; "aucun" pour
+                       masquer le bloc Membres
+       data-titre-membres (optionnel) titre du bloc (déf. « Membres »)
+       data-limit-membres, data-limit-membres-mobile (optionnel)
+                       pastilles visibles avant « Afficher plus »
+                       (déf. toutes)
+       data-titre      (optionnel) titre (déf. « Nos membres et partenaires »)
        data-volet      (optionnel) menu du volet (déf. "membres-partenaires",
                        donc menu « À propos » avec cet élément en
                        évidence) ; "aucun" pour ne pas en afficher
@@ -1305,7 +1315,7 @@
           ${htmlBlocProjet("L'équipe du projet", "equipe", htmlEquipe(equipe, limitesEquipe))}
           ${htmlBlocProjet("Publications scientifiques", "publications",
             pubs.length ? `<div class="pt-grille pt-grille--publications">${pubs.map(carteArticle).join("")}</div>` : "")}
-          ${htmlBlocProjet("Dernières actualités", "actualites",
+          ${htmlBlocProjet("Pour aller plus loin", "actualites",
             actus.length ? `<div class="pt-grille pt-grille--actualites" data-pagine-pas="${limiteActus}">${actus.map(carteActualite).join("")}</div>` : "")}
           ${htmlBlocProjet("Partenaires", "partenaires", htmlPartenaires(parts))}
         </article>
@@ -1362,7 +1372,11 @@
   async function construirePartenaires(zone) {
     const filtre = String(zone.dataset.partenaires || "").split(",").map((t) => t.trim()).filter(Boolean);
     try {
-      const [donnees] = await Promise.all([charger("partenaires"), chargerCategories()]);
+      const [donnees, personnes] = await Promise.all([
+        charger("partenaires"),
+        charger("personnes").catch(() => []),
+        chargerCategories(),
+      ]);
       const categories = (Array.isArray(donnees.categories) ? donnees.categories : [])
         .filter((c) => !filtre.length || filtre.includes(c.id));
       filtre.filter((id) => !categories.some((c) => c.id === id)).forEach((id) => {
@@ -1374,11 +1388,34 @@
         return htmlBlocProjet(c.titre, `partenaires partenaires__groupe`, htmlPartenaires(membres, { categorie: false }));
       }).join("");
 
+      // --- Membres : pastilles rondes (même rendu que l'équipe d'un projet) ---
+      const choixMembres = String(zone.dataset.membres || "").trim();
+      let membres = [];
+      if (choixMembres !== "aucun") {
+        const toutes = personnes.filter(publie);
+        if (choixMembres) {
+          const parId = new Map(toutes.map((p) => [p.id, p]));
+          membres = choixMembres.split(",").map((t) => t.trim()).filter(Boolean).map((id) => {
+            if (!parId.has(id)) console.warn(`[contenus] Membres : "${id}" introuvable dans data/contenus/personnes.json`);
+            return parId.get(id);
+          }).filter(Boolean);
+        } else {
+          membres = toutes;
+        }
+      }
+      const limitesMembres = {
+        grand: parseInt(zone.dataset.limitMembres, 10) || 9999,
+        mobile: parseInt(zone.dataset.limitMembresMobile, 10) || parseInt(zone.dataset.limitMembres, 10) || 9999,
+      };
+      const blocMembres = htmlBlocProjet(zone.dataset.titreMembres || "Membres", "equipe partenaires__membres",
+        htmlEquipe(membres, limitesMembres));
+
       const idTitre = `partenaires-${++compteurVolets}-titre`;
       const contenu = `
         <section class="partenaires" aria-labelledby="${idTitre}">
-          <h2 id="${idTitre}" class="projet__titre partenaires__titre">${esc(zone.dataset.titre || "Nos partenaires")}</h2>
-          ${blocs || `<p class="categorie__vide">Aucun partenaire pour le moment.</p>`}
+          <h2 id="${idTitre}" class="projet__titre partenaires__titre">${esc(zone.dataset.titre || "Nos membres et partenaires")}</h2>
+          ${blocMembres}
+          ${blocs || (blocMembres ? "" : `<p class="categorie__vide">Aucun membre ni partenaire pour le moment.</p>`)}
         </section>`;
 
       const idVolet = zone.dataset.volet === undefined ? "membres-partenaires" : zone.dataset.volet;
@@ -1390,6 +1427,7 @@
         ? `<div class="volet-grille"><div class="volet-principal">${contenu}</div>${volet}</div>`
         : contenu;
       zone.setAttribute("aria-busy", "false");
+      brancherAfficherPlus(zone);
     } catch (err) {
       console.error("[contenus] Partenaires : impossible de charger data/contenus/partenaires.json :", err);
     }
